@@ -281,13 +281,13 @@ class Singularity:
           
 async def plot_it(*args, **kwargs):
 
-    L = int(largo_element.value)
+    L = float(largo_element.value)
     a11 = int(a1res_element.value)
-    a12 = int(a1pos_element.value)
+    a12 = float(a1pos_element.value)
     a21 = int(a2res_element.value)
-    a22 = int(a2pos_element.value)
-    c11 = int(c1muli_element.value)
-    c12 = int(c1ini_element.value)
+    a22 = float(a2pos_element.value)
+    c11 = float(c1muli_element.value)
+    c12 = float(c1ini_element.value)
     c13 = int(c1tipo_element.value)
     c23 = int(c2tipo_element.value)
     c33 = int(c3tipo_element.value)
@@ -297,37 +297,37 @@ async def plot_it(*args, **kwargs):
     x = np.linspace(0,L, 1000)
     qs = []
     if c13 == 0:
-      c14 = int(c1fin_element.value)
+      c14 = float(c1fin_element.value)
       qs.append([c11,c12,c13])
       qs.append([-c11,c14,c13])
     else:
       qs.append([c11,c12,c13])
 
     if c23 == 0:
-      c21 = int(c2muli_element.value)
-      c22 = int(c2ini_element.value)
-      c24 = int(c1fin_element.value)
+      c21 = float(c2muli_element.value)
+      c22 = float(c2ini_element.value)
+      c24 = float(c1fin_element.value)
       qs.append([c21,c22,c23])
       qs.append([-c21,c24,c23])
     elif c23 == 1:
       pass
     else:
-      c21 = int(c2muli_element.value)
-      c22 = int(c2ini_element.value)
+      c21 = float(c2muli_element.value)
+      c22 = float(c2ini_element.value)
       qs.append([c21,c22,c23])
           
     if c33 == 0:
-      c31 = int(c3muli_element.value)
-      c32 = int(c3ini_element.value)
-      c34 = int(c3fin_element.value)
+      c31 = float(c3muli_element.value)
+      c32 = float(c3ini_element.value)
+      c34 = float(c3fin_element.value)
       qs.append([c31,c32,c33])
       qs.append([-c31,c34,c33])
     elif c33 == 1:
       pass
 
     else:
-      c31 = int(c3muli_element.value)
-      c32 = int(c3ini_element.value)
+      c31 = float(c3muli_element.value)
+      c32 = float(c3ini_element.value)
       qs.append([c31,c32,c33])
         
     Qs = []
@@ -359,7 +359,7 @@ async def plot_it(*args, **kwargs):
     R=np.linalg.solve(A,f)
 
     qA1 = Singularity(-R[0], A1[1], -A1[0])
-    qA2 = Singularity(R[1], A2[1], -A2[0])
+    qA2 = Singularity(-R[1], A2[1], -A2[0])
     Qs.append(qA1)
     Qs.append(qA2)
     Vs = []
