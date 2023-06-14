@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+
+<html>
+  
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Calculadora de Vigas</title>
+    <link rel="icon" type="image/x-icon" href="./favicon.png">
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css'>
+    <link rel="icon" type="image/png" href="https://user-images.githubusercontent.com/49681382/166738771-d0c26557-426c-4688-9641-8db5e6b08348.png" />
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    <py-env>
+- matplotlib
+- numpy
+    </py-env>
+
+</head>
+
+
+<body>
+
+    <div hidden id="evtMsg">0</div>
+<!-- Header -->
+<section class="hero is-primary is-small">
+    <div class="hero-body">
+        <p class="title is-3">Calculadora gráfica de deflexión en vigas sometidas a cargas <span class="tag is-white">v.1</span></p>
+        <p class="subtitle is-6">
+            ICM2028 - Mecánica de materiales
+        </p>
+    </div>
+</section>
+
+<div class="container is-fullhd">
+
+<p class="title is-3">Deflexión en vigas</p>
+
+<div class="columns" style="margin-top:45px">
+    <div class="column is-one-fourth"> 
+        <div class="field">
+            <label class="label">Largo de viga</label>
+            <div class="control">
+                <input type="text" id="largo"/>
+            </div>
+        </div>
+
+
+    <!-- Apoyo 1 -->
+        <!-- <div class="field"> -->
+
+        <label class="label">Restricción Apoyo 1</label>
+        <div class="field has-addons">
+            <div class="control is-expanded">
+                <div class="select">
+                <select name="operation" id="a1res">
+                    <option value="1">Empotrado</option>
+                    <option value="2">Apoyado</option>
+                    <option value="3">Libre</option>
+                </select>
+                </div>
+            </div>
+        </div>
+
+
+    <!-- Apoyo 2 -->
+
+        <label class="label">Restricción Apoyo 2</label>
+        <div class="field has-addons">
+            <div class="control is-expanded">
+                <div class="select">
+                <select name="operation" id="a2res">
+                    <option value="1">Empotrado</option>
+                    <option value="2">Apoyado</option>
+                    <option value="3">Libre</option>
+                </select>
+                </div>
+            </div>
+        </div>
+    </div>  
+  
+    <!-- Carga 1 -->
+    <div class="column is-one-fourth">
+  
+        <label class="label">Carga 1</label>
+        <label class="label">Tipo de carga</label>
+        <div class="field has-addons">
+            <div class="control is-expanded">
+                <div class="select">
+                <select name="operation" id="c1tipo">
+                    <option value="0">Carga distribuida</option>
+                    <option value="-1">Carga puntual</option>
+                    <option value="-2">Momento puntual</option>
+                </select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="field">
+            <label class="label">Magnitud de carga</label>
+            <input type="text" id="c1muli"/>
+        </div>
+
+        <div class="field">
+            <label class="label">Inicio de Carga</label>
+            <input type="text" id="c1ini"/>     
+        </div>
+
+        <div class="field">
+            <label class="label">Fin de Carga </label>
+            <input type="text" placeholder="Solo cargas distribuidas" id="c1fin"/>     
+        </div>
+    </div>
+    <!-- Carga 2 -->
+    <div class="column is-one-fourth">
+    <label class="label">Carga 2</label>
+    <label class="label">Tipo de carga</label>
+    <div class="field has-addons">
+        <div class="control is-expanded">
+            <div class="select">
+            <select name="operation" id="c2tipo">
+                <option value="1">Sin Carga</option>
+                <option value="0">Carga distribuida</option>
+                <option value="-1">Carga puntual</option>
+                <option value="-2">Momento puntual</option>
+            </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Magnitud de carga</label>
+        <input type="text" id="c2muli"/>
+    </div>
+
+    <div class="field">
+        <label class="label">Inicio de Carga</label>
+        <input type="text" id="c2ini"/>     
+    </div>
+
+    <div class="field">
+        <label class="label">Fin de Carga</label>
+        <input type="text" placeholder="Solo cargas distribuidas" id="c2fin"/>     
+    </div>
+    </div>
+
+    <!-- Carga 3 -->
+    <div class="column is-one-fourth">
+    <label class="label">Carga 3</label>
+    <label class="label">Tipo de carga</label>
+    <div class="field has-addons">
+        <div class="control is-expanded">
+            <div class="select">
+            <select name="operation" id="c3tipo">
+                <option value="1">Sin Carga</option>
+                <option value="0">Carga distribuida</option>
+                <option value="-1">Carga puntual</option>
+                <option value="-2">Momento puntual</option>
+            </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Magnitud de carga</label>
+        <input type="text" id="c3muli"/>
+    </div>
+
+    <div class="field">
+        <label class="label">Inicio de Carga</label>
+        <input type="text" id="c3ini"/>     
+    </div>
+
+    <div class="field">
+        <label class="label">Fin de Carga</label>
+        <input type="text" placeholder="Solo cargas distribuidas" id="c3fin"/>     
+    </div>
+
+    <!-- Botón -->
+      
+    <button id="plot-button" type="button" class="button is-primary" onClick="document.getElementById('evtMsg').innerHTML=100" class="button">Plot</button>
+    </div>
+    </div>
+
+
+    <!-- </div> -->
+  
+  <hr>
+<div class="column is-one-half">
+  <div id="output"></div>
+<!-- </div> -->
+  
+</div> 
+</div>
+  <!-- </div>
+</div> -->
+  
+<!-- Footer -->
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>
+            Desarrollado por <strong>Carlos Cabrera & Francisco Sahli</strong></a>
+        </p>
+    </div>
+</footer>
+
+<py-script>
+
+import matplotlib.pyplot as plt
+import numpy as np
+import asyncio
+from pyodide import create_proxy
+
+## INPUTS HTML ##
+  
+largo_element = Element("largo")
+a1res_element = Element("a1res") 
+a2res_element = Element("a2res")
+c1tipo_element = Element("c1tipo")
+c1muli_element = Element("c1muli")
+c1ini_element = Element("c1ini")
+c1fin_element = Element("c1fin")
+c2tipo_element = Element("c2tipo")
+c2muli_element = Element("c2muli")
+c2ini_element = Element("c2ini")
+c2fin_element = Element("c2fin")
+c3tipo_element = Element("c3tipo")
+c3muli_element = Element("c3muli")
+c3ini_element = Element("c3ini")
+c3fin_element = Element("c3fin")
+output = Element("output")
+
+## BOTÓN ##
+  
+def Setup_Button_Listeners():
+    btnList = document.querySelectorAll(".button")
+    for i in range(len(btnList)):
+        e = document.getElementById(btnList[i].id)
+        btn_event = create_proxy(Process_Button)
+        e.addEventListener("click", btn_event)
+        
+async def Process_Button(event):
+    if document.getElementById("evtMsg").innerHTML == '100': 
+        fig = await plot_it()
+        output.write(fig)
+
+## CLASES ##
+  
+class Singularity:
+    def __init__(self,w0, a, order, coeff = 1):
+        self.w0 = w0
+        self.a = a
+        self.order = order
+        self.coeff = coeff
+    def __call__(self, x):
+        if self.order >= 0:
+            return self.w0*(x-self.a)**self.order*(x>=self.a)*self.coeff 
+        else:
+            return np.zeros_like(x) # functions of negative order can only be integrated
+    def integrate(self):
+        if self.order < 0:
+            return Singularity(self.w0, self.a, self.order + 1)
+        else:
+            return Singularity(self.w0, self.a, self.order + 1, coeff = self.coeff*1.0/(self.order + 1))
+
+## FUNCIÓN ##
+          
+async def plot_it(*args, **kwargs):
+
+    L = float(largo_element.value)
+    a1 = int(a1res_element.value)
+    a2 = int(a2res_element.value)
+    c11 = float(c1muli_element.value)
+    c12 = float(c1ini_element.value)
+    c13 = int(c1tipo_element.value)
+    c23 = int(c2tipo_element.value)
+    c33 = int(c3tipo_element.value)
+
+    ## Constantes ##
+
+          
+    E = 1e9 # Pa
+    I = 0.1*0.1**3/12
+
+          
+    ## Definición de apoyos ##
+
+          
+    if a1 == 1:
+        A1 = "empotrado"
+    elif a1 == 2:
+        A1 = "apoyado"
+    elif a1 == 3:
+        A1 = "libre"
+    else:
+        A1 = "desconocido"
+
+    if a2 == 1:
+        A2 = "empotrado"
+    elif a2 == 2:
+        A2 = "apoyado"
+    elif a2 == 3:
+        A2 = "libre"
+    else:
+        A2 = "desconocido"
+
+   
+          
+    ## Entrada de Cargas ##
+
+          
+    qs = []
+    if c13 == 0:
+        c14 = float(c1fin_element.value)
+        qs.append([c11,c12,c13])
+        qs.append([-c11,c14,c13])
+    else:
+        qs.append([c11,c12,c13])
+
+    if c23 == 0:
+        c21 = float(c2muli_element.value)
+        c22 = float(c2ini_element.value)
+        c24 = float(c1fin_element.value)
+        qs.append([c21,c22,c23])
+        qs.append([-c21,c24,c23])
+    elif c23 == 1:
+        pass
+    else:
+        c21 = float(c2muli_element.value)
+        c22 = float(c2ini_element.value)
+        qs.append([c21,c22,c23])
+          
+    if c33 == 0:
+        c31 = float(c3muli_element.value)
+        c32 = float(c3ini_element.value)
+        c34 = float(c3fin_element.value)
+        qs.append([c31,c32,c33])
+        qs.append([-c31,c34,c33])
+    elif c33 == 1:
+        pass
+
+    else:
+        c31 = float(c3muli_element.value)
+        c32 = float(c3ini_element.value)
+        qs.append([c31,c32,c33])
+
+          
+    ## Procesado cargas ##
+
+
+    Qs = []
+
+    for q in qs:
+        Qis = [Singularity(q[0],q[1],q[2])]
+        for i in range(4):
+            Qis.append(Qis[-1].integrate())
+        Qs.append(Qis)
+
+
+          
+          
+    ## Procesado de apoyos ##
+
+          
+    assert not ((A1 == 'libre') and (A2 == 'libre'))
+    A = np.zeros((4,4))
+    b = np.zeros(4)
+    if A1 == "empotrado":
+        # v(0) = 0
+        A[0,3] = 1.0
+        b[0] = 0 
+        # dv/dx(0) = 0
+        A[1,2] = 1.0
+        b[1] = 0
+    elif A1 == "apoyado":
+        # v(0) = 0
+        A[0,3] = 1.0
+        b[0] = 0 
+        # d2v/dx2(0) = 0
+        A[1,1] = 1.0
+        b[1] = 0   
+    elif A1 == "libre":
+        # d3v/dx3(0) = 0
+        A[0,0] = 1.0
+        b[0] = 0 
+        # d2v/dx2(0) = 0
+        A[1,1] = 1.0
+        b[1] = 0   
+    else:
+        raise("apoyo desconocido")
+    
+    if A2 == "empotrado":
+        # v(L) = 0
+        A[2,0] = L**3/6
+        A[2,1] = L**2/2
+        A[2,2] = L
+        A[2,3] = 1.0
+        for Q in Qs:
+            b[2] += Q[4](L)
+        # dv/dx(0) = 0
+        A[3,0] = L**2/2
+        A[3,1] = L
+        A[3,2] = 1
+        for Q in Qs:
+            b[3] += Q[3](L)
+    elif A2 == "apoyado":
+        # v(L) = 0
+        A[2,0] = L**3/6
+        A[2,1] = L**2/2
+        A[2,2] = L
+        A[2,3] = 1.0
+        for Q in Qs:
+            b[2] += Q[4](L)
+        # d2v/dx2(0) = 0
+        A[3,0] = L
+        A[3,1] = 1
+        for Q in Qs:
+            b[3] += Q[2](L)
+    elif A2 == "libre":
+        # d3v/dx3(0) = 0
+        A[2,0] = 1.0
+        for Q in Qs:
+            b[2] += Q[1](L)
+        # d2v/dx2(0) = 0
+        A[3,0] = L
+        A[3,1] = 1
+        for Q in Qs:
+            b[3] += Q[2](L)
+    else:
+        raise("apoyo desconocido")
+
+    cs = np.linalg.solve(A,b)
+      
+    x = np.linspace(0,L,100)
+
+    Xs = np.power(x[:,None], np.arange(0,4)[::-1])
+    
+    v = np.zeros_like(x)
+    for Q in Qs:
+        v -= Q[4](x)
+    
+    v+= np.dot(Xs/np.array([6,2,1,1]), cs)
+    
+    v /= E*I
+          
+    fig, ax = plt.subplots()
+
+    ax.plot(x, v, linestyle='-', color='g', label='Deflexión')
+    ax.set_xlabel("x")
+    ax.set_ylabel("Deflexión")
+
+    plt.title('Deflexión en Vigas')
+    plt.legend()
+    fig
+    return fig
+          
+Setup_Button_Listeners()
+
+</py-script>
+  
+</body>
+
+</html>
