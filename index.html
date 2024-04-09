@@ -354,10 +354,15 @@ async def plot_it(*args, **kwargs):
     for qi in Qs:
         qi_int = qi.integrate()
         w += qi_int(L) - qi_int(0)
-        wx += np.trapz(x*qi(x),x)
+        if qi.order == -1:
+            wx += qi.a*qi.w0
+        elif qi.order == -2:
+            wx += qi.w0
+        else:
+            wx += np.trapz(x*qi(x),x)
     f = np.array([w, wx])
     R=np.linalg.solve(A,f)
-
+    print(R)
     qA1 = Singularity(-R[0], A1[1], -A1[0])
     qA2 = Singularity(-R[1], A2[1], -A2[0])
     Qs.append(qA1)
@@ -377,18 +382,19 @@ async def plot_it(*args, **kwargs):
     for mi in Ms:
         M -= mi(x)
 
-    fig, ax = plt.subplots()
+    fig, axs = plt.subplots(2,1)
+    
 
-    ax.plot(x, V, linestyle='-', color='g', label='Corte')
-    ax.set_xlabel("x")
-    ax.set_ylabel("Corte")
+    axs[0].plot(x, V, linestyle='-', color='g', label='Corte')
+    axs[0].set_xlabel("x")
+    axs[0].set_ylabel("Corte")
+    axs[0].grid()
 
-    ax2=ax.twinx()
-    ax2.plot(x, M, linestyle='-', color='r', label='Momento')
-    ax2.set_ylabel("Momento")
-
-    plt.title('Corte y Momento en vigas')
-    plt.legend()
+    axs[1].plot(x, M, linestyle='-', color='r', label='Momento')
+    axs[1].set_ylabel("Momento")
+    axs[1].set_xlabel("x")
+    axs[1].grid()
+    plt.tight_layout()
     fig
     return fig
     
