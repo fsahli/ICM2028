@@ -357,7 +357,7 @@ async def plot_it(*args, **kwargs):
         if qi.order == -1:
             wx += qi.a*qi.w0
         elif qi.order == -2:
-            wx += qi.w0
+            wx -= qi.w0
         else:
             wx += np.trapz(x*qi(x),x)
     f = np.array([w, wx])
