@@ -119,7 +119,7 @@ async def plot_it(*args, **kwargs):
     V = sum(q.integrate()(x) for q in Qs)
     M = -sum(q.integrate().integrate()(x) for q in Qs)
 
-    fig, axs = plt.subplots(2,1)
+    fig, axs = plt.subplots(3, 1, figsize=(8, 6), height_ratios=[1, 2, 2])
     axs[0].plot(x, V, linestyle='-', color='g', label='Corte')
     axs[0].set_xlabel("x")
     axs[0].set_ylabel("Corte")
@@ -130,6 +130,40 @@ async def plot_it(*args, **kwargs):
     axs[1].set_xlabel("x")
     axs[1].grid()
     plt.tight_layout()
+    # === Visualización de cargas en axs[0] ===
+ax_cargas = axs[0]
+ax_cargas.set_xlim(0, L)
+ax_cargas.set_ylim(-2, 2)
+ax_cargas.axis("off")
+
+# Viga gris horizontal
+ax_cargas.hlines(0, 0, L, linewidth=10, color="gray")
+
+# Reacciones en apoyos
+if A1[0] == 1:  # apoyo vertical
+    ax_cargas.arrow(A1[1], 0, 0, 0.8, head_width=0.2, head_length=0.3, fc="blue", ec="blue")
+if A2[0] == 1:
+    ax_cargas.arrow(A2[1], 0, 0, 0.8, head_width=0.2, head_length=0.3, fc="blue", ec="blue")
+
+# Cargas aplicadas
+for q in qs:
+    w0, a, orden = q
+    if orden == -1:
+        # Carga puntual (flecha roja hacia abajo)
+        ax_cargas.arrow(a, 1.5, 0, -1.5, head_width=0.2, head_length=0.3, fc="red", ec="red")
+    elif orden == 0:
+        # Carga distribuida uniforme (se dibujan muchas flechas)
+        idx = qs.index(q)
+        if idx + 1 < len(qs) and qs[idx + 1][0] == -w0 and qs[idx + 1][2] == 0:
+            a_fin = qs[idx + 1][1]
+            n = 8
+            for xi in np.linspace(a, a_fin, n):
+                ax_cargas.arrow(xi, 1.5, 0, -1.5, head_width=0.15, head_length=0.2, fc="crimson", ec="crimson")
+    elif orden == -2:
+        # Momento puntual (círculo naranja con punto negro)
+        ax_cargas.plot(a, 0.7, marker="o", markersize=12, color="orange")
+        ax_cargas.plot(a, 0.7, marker=".", markersize=4, color="black")
+
     return fig
 
 Setup_Button_Listeners()
