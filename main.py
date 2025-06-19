@@ -130,7 +130,8 @@ async def plot_it(*args, **kwargs):
     axs[1].set_xlabel("x")
     axs[1].grid()
     plt.tight_layout()
-    # === Visualización de cargas en axs[0] ===
+    
+# === Visualización de cargas en axs[0] ===
 ax_cargas = axs[0]
 ax_cargas.set_xlim(0, L)
 ax_cargas.set_ylim(-2, 2)
