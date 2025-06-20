@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import numpy as np
 from pyscript import display
 from js import document
@@ -23,9 +24,17 @@ c3fin_element = document.getElementById("c3fin")
 
 output = document.getElementById("output")
 
-async def plot_it_wrapper():
-    fig = await plot_it()
-    display(fig, target="output", append=False)
+def Setup_Button_Listeners():
+    btnList = document.querySelectorAll(".button")
+    for i in range(len(btnList)):
+        e = document.getElementById(btnList[i].id)
+        btn_event = create_proxy(Process_Button)
+        e.addEventListener("click", btn_event)
+
+async def Process_Button(event):
+    if document.getElementById("evtMsg").innerHTML == '100': 
+        fig = await plot_it()
+        display(fig, target="output", append=False)
 
 class Singularity:
     def __init__(self,w0, a, order, coeff = 1):
@@ -57,7 +66,7 @@ async def plot_it(*args, **kwargs):
     c33 = int(c3tipo_element.value)
     A1 = [a11,a12]
     A2 = [a21,a22]
-    print("Se ejecutó plot_it()") 
+        
     x = np.linspace(0,L, 1000)
     qs = []
     if c13 == 0:
@@ -110,60 +119,19 @@ async def plot_it(*args, **kwargs):
     V = sum(q.integrate()(x) for q in Qs)
     M = -sum(q.integrate().integrate()(x) for q in Qs)
 
-    fig, axs = plt.subplots(3, 1, figsize=(8, 6), height_ratios=[1, 2, 2])
+    fig, axs = plt.subplots(2,1)
+    axs[0].plot(x, V, linestyle='-', color='g', label='Corte')
+    axs[0].set_xlabel("x")
+    axs[0].set_ylabel("Corte")
+    axs[0].grid()
 
-    # === Visualización de cargas en axs[0] ===
-    ax_cargas = axs[0]
-    ax_cargas.set_xlim(0, L)
-    ax_cargas.set_ylim(-2, 2)
-    ax_cargas.axis("off")
-    ax_cargas.hlines(0, 0, L, linewidth=10, color="gray")
-
-    if A1[0] == 1:
-        ax_cargas.arrow(A1[1], 0, 0, 0.8, head_width=0.2, head_length=0.3, fc="blue", ec="blue")
-    if A2[0] == 1:
-        ax_cargas.arrow(A2[1], 0, 0, 0.8, head_width=0.2, head_length=0.3, fc="blue", ec="blue")
-
-    for q in qs:
-        w0, a, orden = q
-        if orden == -1:
-            ax_cargas.arrow(a, 1.5, 0, -1.5, head_width=0.2, head_length=0.3, fc="red", ec="red")
-        elif orden == 0:
-            idx = qs.index(q)
-            if idx + 1 < len(qs) and qs[idx + 1][0] == -w0 and qs[idx + 1][2] == 0:
-                a_fin = qs[idx + 1][1]
-                n = 8
-                for xi in np.linspace(a, a_fin, n):
-                    ax_cargas.arrow(xi, 1.5, 0, -1.5, head_width=0.15, head_length=0.2, fc="crimson", ec="crimson")
-        elif orden == -2:
-            ax_cargas.plot(a, 0.7, marker="o", markersize=12, color="orange")
-            ax_cargas.plot(a, 0.7, marker=".", markersize=4, color="black")
-
-    axs[1].plot(x, V, linestyle='-', color='g', label='Corte')
+    axs[1].plot(x, M, linestyle='-', color='r', label='Momento')
+    axs[1].set_ylabel("Momento")
     axs[1].set_xlabel("x")
-    axs[1].set_ylabel("Corte")
     axs[1].grid()
-
-    axs[2].plot(x, M, linestyle='-', color='r', label='Momento')
-    axs[2].set_ylabel("Momento")
-    axs[2].set_xlabel("x")
-    axs[2].grid()
-
     plt.tight_layout()
     return fig
-    fig = await plot_it()
-    display(fig, target="output", append=False)
-
-
-
-
-
-
-    
 
 Setup_Button_Listeners()
-
-
-
 
     
