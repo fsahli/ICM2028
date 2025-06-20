@@ -141,12 +141,6 @@ async def plot_it(*args, **kwargs):
     ax1.tick_params(left=True, bottom=True)
     ax1.grid(True, linestyle='--', linewidth=0.5)
     
-    # Flechas para ejes
-    ax1.annotate("", xy=(x[-1], 0), xytext=(x[0], 0),
-                 arrowprops=dict(arrowstyle="->", linewidth=1.5, color='black'))
-    ax1.annotate("", xy=(0, max(V)*1.1 if max(V) > 0 else 1), xytext=(0, min(V)*1.1 if min(V) < 0 else -1),
-                 arrowprops=dict(arrowstyle="->", linewidth=1.5, color='black'))
-    
     # ---------- GRÁFICO DE MOMENTO ----------
     fig_momento, ax2 = plt.subplots()
     ax2.plot(x, M, color=color_m, linewidth=2)
