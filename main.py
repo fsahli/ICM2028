@@ -164,10 +164,19 @@ async def plot_it(*args, **kwargs):
     ax2.tick_params(left=True, bottom=True)
     ax2.grid(True, linestyle='--', linewidth=0.5)
     
-    ax2.annotate("", xy=(x[-1], 0), xytext=(x[0], 0),
+    # Extender un poco los límites para asegurar espacio a la flecha
+    ax2.set_xlim(x[0] - 0.5, x[-1] + 0.5)
+    y_margin = max(abs(max(M)), abs(min(M))) * 1.2 or 1
+    ax2.set_ylim(-y_margin, y_margin)
+    
+    # Flecha eje X
+    ax2.annotate("", xy=(x[-1] + 0.4, 0), xytext=(x[0], 0),
                  arrowprops=dict(arrowstyle="->", linewidth=1.5, color='black'))
-    ax2.annotate("", xy=(0, max(M)*1.1 if max(M) > 0 else 1), xytext=(0, min(M)*1.1 if min(M) < 0 else -1),
+    
+    # Flecha eje Y
+    ax2.annotate("", xy=(0, y_margin - 0.1), xytext=(0, -y_margin + 0.1),
                  arrowprops=dict(arrowstyle="->", linewidth=1.5, color='black'))
+
     
     # Mostrar
     display(fig_corte, target="output", append=False)
