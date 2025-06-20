@@ -173,32 +173,47 @@
   </div>
 
   <!-- Carga 3 -->
-  <div class="column is-one-sixth">
-    <div class="pretty-box">
-      <label class="label">Carga 3</label>
-      <div class="select is-fullwidth">
-        <select id="c3tipo">
-          <option>Sin Carga</option>
-          <option>Carga puntual</option>
-          <option>Carga distribuida</option>
-        </select>
-      </div>
-      <input type="text" id="c3muli" class="input" placeholder="Magnitud de carga" />
-      <input type="text" id="c3ini" class="input" placeholder="Inicio de Carga" />
-      <input type="text" id="c3fin" class="input" placeholder="Fin de Carga" />
-    </div>
-  </div>
+<div class="column is-one-sixth">
+  <div class="pretty-box">
+    <label class="label">Carga 3</label>
 
-  <!-- Botón Plot -->
-  <div class="column is-one-sixth has-text-centered">
-    <button class="button is-danger is-rounded is-large mt-5" onclick="plot()">Plot</button>
+    <label class="label">Tipo de carga</label>
+    <div class="field has-addons">
+      <div class="control is-expanded">
+        <div class="select is-fullwidth">
+          <select id="c3tipo">
+            <option value="1">Sin Carga</option>
+            <option value="0">Carga distribuida</option>
+            <option value="-1">Carga puntual</option>
+            <option value="-2">Momento puntual</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Magnitud de carga</label>
+      <input type="text" id="c3muli" class="input" />
+    </div>
+
+    <div class="field">
+      <label class="label">Inicio de Carga</label>
+      <input type="text" id="c3ini" class="input" />
+    </div>
+
+    <div class="field">
+      <label class="label">Fin de Carga</label>
+      <input type="text" id="c3fin" class="input" />
+    </div>
   </div>
 </div>
+</div> <!-- cierre del bloque .columns -->
 
-    </div>
+<!-- Botón Plot abajo y centrado -->
+<div class="has-text-centered" style="margin-top: 20px;">
+  <button id="plot-button" type="button" class="button is-primary" onClick="document.getElementById('evtMsg').innerHTML=100">Plot</button>
+</div>
 
-
-    <!-- </div> -->
   
   <hr>
 <!-- <div class="column is-one-half"> -->
