@@ -1,4 +1,4 @@
-mport numpy as np
+import numpy as np
 from pyscript import display
 from js import document
 from pyodide.ffi import create_proxy
