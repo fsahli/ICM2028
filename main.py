@@ -134,4 +134,18 @@ async def plot_it(*args, **kwargs):
 
 Setup_Button_Listeners()
 
+import matplotlib.pyplot as plt
+
+def mostrar_grafico_vacio():
+    fig, ax = plt.subplots()
+    ax.plot([], [])  # Gráfico vacío
+    ax.set_title("Gráfico vacío")
+    ax.set_xlabel("x")
+    ax.set_ylabel("y")
+    ax.grid()
+    display(fig, target="output", append=True)
+
+# Llamar al gráfico vacío al iniciar
+mostrar_grafico_vacio()
+
     
