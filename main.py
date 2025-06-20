@@ -1,5 +1,4 @@
-import matplotlib.pyplot as plt
-import numpy as np
+mport numpy as np
 from pyscript import display
 from js import document
 from pyodide.ffi import create_proxy
@@ -152,9 +151,17 @@ async def plot_it(*args, **kwargs):
 
     plt.tight_layout()
     return fig
+    fig = await plot_it()
+    display(fig, target="output", append=False)
 
 
 
+
+
+
+    
+
+Setup_Button_Listeners()
 
 
 
