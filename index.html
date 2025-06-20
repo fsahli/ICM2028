@@ -62,14 +62,16 @@
 #plot-button:hover {
   background-color: #ec407a;  /* más intenso al pasar el mouse */
 }
-.pretty-box {
-  background-color: #fff0f5; /* rosado suave */
+    .pretty-box {
+  background-color: #fff0f5;
   border-radius: 15px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 6px rgba(220, 20, 60, 0.1);
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px rgba(220, 20, 60, 0.08);
   border: 1px solid #f8bbd0;
+  max-width: 350px; /* ancho máximo más compacto */
 }
+
 
 </style>
 
@@ -259,9 +261,7 @@
         <input type="text" placeholder="Solo cargas distribuidas" id="c3fin"/>     
     </div>
   
-    <!-- Botón -->
-    <button id="plot-button" type="button" onClick="document.getElementById('evtMsg').innerHTML=100">Plot</button>
-  </div>
+    
 
 
     <!-- Botón -->
