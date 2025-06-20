@@ -169,13 +169,6 @@ async def plot_it(*args, **kwargs):
     y_margin = max(abs(max(M)), abs(min(M))) * 1.2 or 1
     ax2.set_ylim(-y_margin, y_margin)
     
-    # Flecha eje X
-    ax2.annotate("", xy=(x[-1] + 0.4, 0), xytext=(x[0], 0),
-                 arrowprops=dict(arrowstyle="->", linewidth=1.5, color='black'))
-    
-    # Flecha eje Y
-    ax2.annotate("", xy=(0, y_margin - 0.1), xytext=(0, -y_margin + 0.1),
-                 arrowprops=dict(arrowstyle="->", linewidth=1.5, color='black'))
 
     
     # Mostrar
