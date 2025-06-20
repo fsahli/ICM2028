@@ -62,6 +62,14 @@
 #plot-button:hover {
   background-color: #ec407a;  /* más intenso al pasar el mouse */
 }
+.pretty-box {
+  background-color: #fff0f5; /* rosado suave */
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(220, 20, 60, 0.1);
+  border: 1px solid #f8bbd0;
+}
 
 </style>
 
@@ -92,10 +100,13 @@
 <div class="columns" style="margin-top:45px">
     <div class="column is-one-fourth"> 
         <div class="field">
-            <label class="label">Largo de la viga</label>
+            <div class="pretty-box">
+              <label class="label">Largo de la viga</label>
             <div class="control">
-                <input type="text" id="largo"/>
-            </div>
+    <input type="text" id="largo"/>
+  </div>
+</div>
+
         </div>
 
 
