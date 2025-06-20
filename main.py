@@ -163,6 +163,9 @@ import asyncio
 # Exponer función a PyScript
 import pyodide
 pyodide.code.run_globals["plot_it_wrapper"] = plot_it_wrapper
+import pyodide
+pyodide.code.run_globals["plot_it_wrapper"] = plot_it_wrapper
+
 
 
     
