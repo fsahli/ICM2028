@@ -44,9 +44,9 @@
   .container .title {
     font-family: 'Quicksand', sans-serif;
     color: #d81b60;
-    font-size: 1.5 rem;
+    font-size: 0.8 rem;
     text-align: center;
-    margin-top: 2rem;
+    margin-top: 1.0 rem;
   }
     #plot-button {
   background-color: #f06292;  /* rosado aesthetic */
@@ -110,48 +110,51 @@
         </div>
 
 
+    <!-- Apoyo 1 y Apoyo 2 agrupados -->
+  <div class="pretty-box">
+  
     <!-- Apoyo 1 -->
-        <!-- <div class="field"> -->
-        <label class="label">Apoyo 1 </label>
-
-        <div class="field">
-            <label class="label">Posición</label>
-            <input type="text" id="a1pos"/>
-        </div>
-
-        <label class="label">Tipo de Restricción</label>
-        <div class="field has-addons">
-            <div class="control is-expanded">
-                <div class="select">
-                <select name="operation" id="a1res">
-                    <option value="1">Fuerza</option>
-                    <option value="2">Momento</option>
-                </select>
-                </div>
+    <label class="label">Apoyo 1</label>
+  
+    <div class="field">
+        <label class="label">Posición</label>
+        <input type="text" id="a1pos"/>
+    </div>
+  
+    <label class="label">Tipo de Restricción</label>
+    <div class="field has-addons">
+        <div class="control is-expanded">
+            <div class="select">
+            <select name="operation" id="a1res">
+                <option value="1">Fuerza</option>
+                <option value="2">Momento</option>
+            </select>
             </div>
         </div>
-
-
+    </div>
+  
     <!-- Apoyo 2 -->
-        <label class="label">Apoyo 2 </label>
-
-        <div class="field">
-            <label class="label">Posición</label>
-            <input type="text" id="a2pos"/>
-        </div>
-    
-        <label class="label">Tipo de Restricción</label>
-        <div class="field has-addons">
-            <div class="control is-expanded">
-                <div class="select">
-                <select name="operation" id="a2res">
-                    <option value="1">Fuerza</option>
-                    <option value="2">Momento</option>
-                </select>
-                </div>
+    <label class="label">Apoyo 2</label>
+  
+    <div class="field">
+        <label class="label">Posición</label>
+        <input type="text" id="a2pos"/>
+    </div>
+  
+    <label class="label">Tipo de Restricción</label>
+    <div class="field has-addons">
+        <div class="control is-expanded">
+            <div class="select">
+            <select name="operation" id="a2res">
+                <option value="1">Fuerza</option>
+                <option value="2">Momento</option>
+            </select>
             </div>
         </div>
-     </div>   
+    </div>
+  
+  </div>
+    
 
 
     <!-- Carga 1 -->
