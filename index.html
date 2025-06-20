@@ -159,102 +159,72 @@
 
 
     <div class="columns is-multiline is-variable is-4 is-centered">
-    <!-- Carga 1 -->
-    <div class="column is-one-fifth">
-      <div class="pretty-box">
-        <label class="label">Carga 1</label>
-        <label class="label">Tipo de carga</label>
-        <div class="field has-addons">
-          <div class="control is-expanded">
-            <div class="select">
-              <select name="operation" id="c1tipo">
-                <option value="0">Carga distribuida</option>
-                <option value="-1">Carga puntual</option>
-                <option value="-2">Momento puntual</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Magnitud de carga</label>
-          <input type="text" id="c1muli"/>
-        </div>
-        <div class="field">
-          <label class="label">Inicio de Carga</label>
-          <input type="text" id="c1ini"/>
-        </div>
-        <div class="field">
-          <label class="label">Fin de Carga</label>
-          <input type="text" placeholder="Solo cargas distribuidas" id="c1fin"/>
-        </div>
+  <!-- Carga 1 -->
+  <div class="column is-one-third">
+    <div class="pretty-box">
+      <label class="label">Carga 1</label>
+      <label class="label">Tipo de carga</label>
+      <div class="select">
+        <select name="operation" id="c1tipo">
+          <option value="0">Carga distribuida</option>
+          <option value="-1">Carga puntual</option>
+          <option value="-2">Momento puntual</option>
+        </select>
       </div>
-    </div>
-  
-    <!-- Carga 2 -->
-    <div class="column is-one-fifth">
-      <div class="pretty-box">
-        <label class="label">Carga 2</label>
-        <label class="label">Tipo de carga</label>
-        <div class="field has-addons">
-          <div class="control is-expanded">
-            <div class="select">
-              <select name="operation" id="c2tipo">
-                <option value="1">Sin Carga</option>
-                <option value="0">Carga distribuida</option>
-                <option value="-1">Carga puntual</option>
-                <option value="-2">Momento puntual</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Magnitud de carga</label>
-          <input type="text" id="c2muli"/>
-        </div>
-        <div class="field">
-          <label class="label">Inicio de Carga</label>
-          <input type="text" id="c2ini"/>
-        </div>
-        <div class="field">
-          <label class="label">Fin de Carga</label>
-          <input type="text" placeholder="Solo cargas distribuidas" id="c2fin"/>
-        </div>
-      </div>
-    </div>
-  
-    <!-- Carga 3 -->
-    <div class="column is-one-fifth">
-      <div class="pretty-box">
-        <label class="label">Carga 3</label>
-        <label class="label">Tipo de carga</label>
-        <div class="field has-addons">
-          <div class="control is-expanded">
-            <div class="select">
-              <select name="operation" id="c3tipo">
-                <option value="1">Sin Carga</option>
-                <option value="0">Carga distribuida</option>
-                <option value="-1">Carga puntual</option>
-                <option value="-2">Momento puntual</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Magnitud de carga</label>
-          <input type="text" id="c3muli"/>
-        </div>
-        <div class="field">
-          <label class="label">Inicio de Carga</label>
-          <input type="text" id="c3ini"/>
-        </div>
-        <div class="field">
-          <label class="label">Fin de Carga</label>
-          <input type="text" placeholder="Solo cargas distribuidas" id="c3fin"/>
-        </div>
-      </div>
+      <label class="label">Magnitud de carga</label>
+      <input type="text" id="c1muli"/>
+      <label class="label">Inicio de Carga</label>
+      <input type="text" id="c1ini"/>
+      <label class="label">Fin de Carga</label>
+      <input type="text" placeholder="Solo cargas distribuidas" id="c1fin"/>
     </div>
   </div>
-  
+
+  <!-- Carga 2 -->
+  <div class="column is-one-third">
+    <div class="pretty-box">
+      <label class="label">Carga 2</label>
+      <label class="label">Tipo de carga</label>
+      <div class="select">
+        <select name="operation" id="c2tipo">
+          <option value="1">Sin Carga</option>
+          <option value="0">Carga distribuida</option>
+          <option value="-1">Carga puntual</option>
+          <option value="-2">Momento puntual</option>
+        </select>
+      </div>
+      <label class="label">Magnitud de carga</label>
+      <input type="text" id="c2muli"/>
+      <label class="label">Inicio de Carga</label>
+      <input type="text" id="c2ini"/>
+      <label class="label">Fin de Carga</label>
+      <input type="text" placeholder="Solo cargas distribuidas" id="c2fin"/>
+    </div>
+  </div>
+
+  <!-- Carga 3 -->
+  <div class="column is-one-third">
+    <div class="pretty-box">
+      <label class="label">Carga 3</label>
+      <label class="label">Tipo de carga</label>
+      <div class="select">
+        <select name="operation" id="c3tipo">
+          <option value="1">Sin Carga</option>
+          <option value="0">Carga distribuida</option>
+          <option value="-1">Carga puntual</option>
+          <option value="-2">Momento puntual</option>
+        </select>
+      </div>
+      <label class="label">Magnitud de carga</label>
+      <input type="text" id="c3muli"/>
+      <label class="label">Inicio de Carga</label>
+      <input type="text" id="c3ini"/>
+      <label class="label">Fin de Carga</label>
+      <input type="text" placeholder="Solo cargas distribuidas" id="c3fin"/>
+    </div>
+  </div>
+</div>
+
   <!-- Botón centrado -->
   <div class="has-text-centered" style="margin-top: 20px;">
     <button id="plot-button" type="button" onClick="document.getElementById('evtMsg').innerHTML=100">Plot</button>
