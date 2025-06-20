@@ -119,18 +119,33 @@ async def plot_it(*args, **kwargs):
     V = sum(q.integrate()(x) for q in Qs)
     M = -sum(q.integrate().integrate()(x) for q in Qs)
 
-    fig, axs = plt.subplots(2,1)
-    axs[0].plot(x, V, linestyle='-', color='g', label='Corte')
-    axs[0].set_xlabel("x")
-    axs[0].set_ylabel("Corte")
-    axs[0].grid()
+    # Gráfico de Corte (V)
+    fig_corte, ax1 = plt.subplots()
+    ax1.plot(x, V, color='green')
+    ax1.fill_between(x, V, 0, color='green', alpha=0.3)
+    ax1.set_xlabel("x")
+    ax1.set_ylabel("V")
+    ax1.set_title("Esfuerzo de Corte")
+    ax1.axhline(0, color='black', linewidth=0.5)
+    ax1.axvline(0, color='black', linewidth=0.5)
+    ax1.grid(True)
+    
+    # Gráfico de Momento (M)
+    fig_momento, ax2 = plt.subplots()
+    ax2.plot(x, M, color='red')
+    ax2.fill_between(x, M, 0, color='red', alpha=0.3)
+    ax2.set_xlabel("x")
+    ax2.set_ylabel("M")
+    ax2.set_title("Momento Flector")
+    ax2.axhline(0, color='black', linewidth=0.5)
+    ax2.axvline(0, color='black', linewidth=0.5)
+    ax2.grid(True)
+    
+    # Mostrar ambos por separado
+    display(fig_corte, target="output", append=False)
+    display(fig_momento, target="output", append=True)
+    return None
 
-    axs[1].plot(x, M, linestyle='-', color='r', label='Momento')
-    axs[1].set_ylabel("Momento")
-    axs[1].set_xlabel("x")
-    axs[1].grid()
-    plt.tight_layout()
-    return fig
 
 Setup_Button_Listeners()
 
