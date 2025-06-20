@@ -119,29 +119,59 @@ async def plot_it(*args, **kwargs):
     V = sum(q.integrate()(x) for q in Qs)
     M = -sum(q.integrate().integrate()(x) for q in Qs)
 
+    # Colores personalizados
+    color_v = "#7e57c2"    # Morado
+    color_m = "#d81b60"    # Rosado oscuro
+    
     # Gráfico de Corte (V)
     fig_corte, ax1 = plt.subplots()
-    ax1.plot(x, V, color='green')
-    ax1.fill_between(x, V, 0, color='green', alpha=0.3)
+    ax1.plot(x, V, color=color_v, linewidth=2)
+    ax1.fill_between(x, V, 0, color=color_v, alpha=0.3)
     ax1.set_xlabel("x")
-    ax1.set_ylabel("V")
+    ax1.set_ylabel("V(x)")
     ax1.set_title("Esfuerzo de Corte")
-    ax1.axhline(0, color='black', linewidth=0.5)
-    ax1.axvline(0, color='black', linewidth=0.5)
-    ax1.grid(True)
+    
+    # Estilo plano cartesiano con ejes más gruesos
+    ax1.spines['left'].set_position('zero')
+    ax1.spines['bottom'].set_position('zero')
+    ax1.spines['left'].set_linewidth(2)
+    ax1.spines['bottom'].set_linewidth(2)
+    ax1.spines['right'].set_color('none')
+    ax1.spines['top'].set_color('none')
+    ax1.tick_params(left=True, bottom=True)
+    ax1.grid(True, linestyle='--', linewidth=0.5)
+    
+    # Flechas en ejes
+    ax1.annotate("", xy=(x[-1], 0), xytext=(x[-1]-0.01, 0),
+                 arrowprops=dict(arrowstyle="->", linewidth=1.5, color='black'))
+    ax1.annotate("", xy=(0, max(V)*1.1), xytext=(0, max(V)*1.1 - 0.01),
+                 arrowprops=dict(arrowstyle="->", linewidth=1.5, color='black'))
     
     # Gráfico de Momento (M)
     fig_momento, ax2 = plt.subplots()
-    ax2.plot(x, M, color='red')
-    ax2.fill_between(x, M, 0, color='red', alpha=0.3)
+    ax2.plot(x, M, color=color_m, linewidth=2)
+    ax2.fill_between(x, M, 0, color=color_m, alpha=0.3)
     ax2.set_xlabel("x")
-    ax2.set_ylabel("M")
+    ax2.set_ylabel("M(x)")
     ax2.set_title("Momento Flector")
-    ax2.axhline(0, color='black', linewidth=0.5)
-    ax2.axvline(0, color='black', linewidth=0.5)
-    ax2.grid(True)
     
-    # Mostrar ambos por separado
+    # Ejes tipo plano cartesiano
+    ax2.spines['left'].set_position('zero')
+    ax2.spines['bottom'].set_position('zero')
+    ax2.spines['left'].set_linewidth(2)
+    ax2.spines['bottom'].set_linewidth(2)
+    ax2.spines['right'].set_color('none')
+    ax2.spines['top'].set_color('none')
+    ax2.tick_params(left=True, bottom=True)
+    ax2.grid(True, linestyle='--', linewidth=0.5)
+    
+    # Flechas en ejes
+    ax2.annotate("", xy=(x[-1], 0), xytext=(x[-1]-0.01, 0),
+                 arrowprops=dict(arrowstyle="->", linewidth=1.5, color='black'))
+    ax2.annotate("", xy=(0, max(M)*1.1), xytext=(0, max(M)*1.1 - 0.01),
+                 arrowprops=dict(arrowstyle="->", linewidth=1.5, color='black'))
+    
+    # Mostrar
     display(fig_corte, target="output", append=False)
     display(fig_momento, target="output", append=True)
     return None
