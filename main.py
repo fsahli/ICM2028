@@ -24,17 +24,9 @@ c3fin_element = document.getElementById("c3fin")
 
 output = document.getElementById("output")
 
-def Setup_Button_Listeners():
-    btnList = document.querySelectorAll(".button")
-    for i in range(len(btnList)):
-        e = document.getElementById(btnList[i].id)
-        btn_event = create_proxy(Process_Button)
-        e.addEventListener("click", btn_event)
-
-async def Process_Button(event):
-    if document.getElementById("evtMsg").innerHTML == '100': 
-        fig = await plot_it()
-        display(fig, target="output", append=False)
+async def plot_it_wrapper():
+    fig = await plot_it()
+    display(fig, target="output", append=False)
 
 class Singularity:
     def __init__(self,w0, a, order, coeff = 1):
@@ -161,5 +153,4 @@ async def plot_it(*args, **kwargs):
     plt.tight_layout()
     return fig
 
-Setup_Button_Listeners()
     
