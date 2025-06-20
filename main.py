@@ -33,8 +33,8 @@ def Setup_Button_Listeners():
 
 async def Process_Button(event):
     if document.getElementById("evtMsg").innerHTML == '100': 
-        fig = await plot_it()
-        display(fig, target="output", append=False)
+        await plot_it()
+
 
 class Singularity:
     def __init__(self,w0, a, order, coeff = 1):
