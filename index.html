@@ -9,229 +9,183 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
     <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
-     <py-config src="./pyscript.toml"></py-config>
+    <py-config src="./pyscript.toml"></py-config>
   <style>
   body {
     background-color: #fce4ec;
-    font-family: 'Poppins', sans-serif;
   }
-
   .hero.is-primary {
     background-color: #ec407a !important;
   }
-
-  /* Título principal */
-  .hero .title {
-  font-family: 'Quicksand', sans-serif;
-  font-size: 5.0 rem;
-  color: white;
-  text-align: center;
-  font-weight: 600;
-  margin-bottom: 1.8 rem; /* antes 0.5rem */
-  line-height: 1.3;    /* da más aire vertical */
-}
-
-.hero .subtitle {
-  font-family: 'Poppins', sans-serif;
-  font-size: 1 rem;
-  color: #f06292;
-  text-align: center;
-  margin-top: 1.0 rem; /* agrega espacio superior */
-}
-
-
-  /* Título secundario */
-  .container .title {
-  font-family: 'Quicksand', sans-serif;
-  color: #d81b60;
-  font-size: 1.5 rem; 
-  text-align: center;
-  margin-top: 2.0 rem;
-  margin-bottom: 1 rem;
-}
-
-    #plot-button {
-  background-color: #f06292;  /* rosado aesthetic */
-  color: white;
-  border: none;
-  border-radius: 12px;        /* bordes redondeados */
-  padding: 10px 20px;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
-}
-
-#plot-button:hover {
-  background-color: #ec407a;  /* más intenso al pasar el mouse */
-}
-    .pretty-box {
-  background-color: #fff0f5;
-  border-radius: 15px;
-  padding: 20px;
-  margin: 10px; /* antes margin-bottom solo */
-  box-shadow: 0 2px 6px rgba(220, 20, 60, 0.1);
-  border: 1px solid #f8bbd0;
-  max-width: 350px;
-}
-
-.select select {
-  max-width: 220 px;
-  width: 100 %;
-}
-
 </style>
 
-
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Quicksand:wght@500&display=swap" rel="stylesheet">
-
-  </head>  
-  
+</head>  
 
 <body>
 
-    <div hidden id="evtMsg">0</div>
+<div hidden id="evtMsg">0</div>
+
 <!-- Header -->
 <section class="hero is-primary is-small">
-    <div class="hero-body">
-        <p class="title is-3">Calculadora de momentos y esfuerzos de corte interno en vigas <span class="tag is-white">v.1</span></p>
-        <p class="subtitle is-6">
-            ICM2028 - Mecánica de materiales
-        </p>
-    </div>
+  <div class="hero-body">
+    <p class="title is-3">Calculadora de momentos y esfuerzos de corte interno en vigas <span class="tag is-white">v.1</span></p>
+    <p class="subtitle is-6">ICM2028 - Mecánica de materiales</p>
+  </div>
 </section>
 
 <div class="container is-fullhd">
+  <p class="title is-3">Momento y Esfuerzo de Corte en vigas</p>
 
-<p class="title is-5 has-text-weight-semibold">Momento y Esfuerzo de Corte en vigas</p>
-  
-<div class="columns is-multiline is-variable is-4 is-centered" style="margin-top: 35px;">
-  
-  <div class="column is-one-sixth">
-    <div class="pretty-box">
-      <label class="label">Largo de la viga</label>
-      <div class="control">
-        <input type="text" id="largo" class="input" />
-      </div>
-    </div>
-  </div>
-
-  <div class="column is-one-sixth">
-    <div class="pretty-box">
-      <label class="label">Apoyo 1</label>
-      <input type="text" id="a1pos" class="input" placeholder="Posición" />
-      <label class="label">Tipo de Restricción</label>
-      <div class="select is-fullwidth">
-        <select id="a1res">
-          <option value="1">Fuerza</option>
-          <option value="2">Momento</option>
-        </select>
-      </div>
-      <label class="label">Apoyo 2</label>
-      <input type="text" id="a2pos" class="input" placeholder="Posición" />
-      <label class="label">Tipo de Restricción</label>
-      <div class="select is-fullwidth">
-        <select id="a2res">
-          <option value="1">Fuerza</option>
-          <option value="2">Momento</option>
-        </select>
-      </div>
-    </div>
-  </div>
-
-  <!-- Carga 1 -->
-  <div class="column is-one-sixth">
-    <div class="pretty-box">
-      <label class="label">Carga 1</label>
-      <div class="select is-fullwidth">
-        <select id="c1tipo">
-          <option>Sin Carga</option>
-          <option>Carga puntual</option>
-          <option>Carga distribuida</option>
-        </select>
-      </div>
-      <input type="text" id="c1muli" class="input" placeholder="Magnitud de carga" />
-      <input type="text" id="c1ini" class="input" placeholder="Inicio de Carga" />
-      <input type="text" id="c1fin" class="input" placeholder="Fin de Carga" />
-    </div>
-  </div>
-
-  <!-- Carga 2 -->
-  <div class="column is-one-sixth">
-    <div class="pretty-box">
-      <label class="label">Carga 2</label>
-      <div class="select is-fullwidth">
-        <select id="c2tipo">
-          <option>Sin Carga</option>
-          <option>Carga puntual</option>
-          <option>Carga distribuida</option>
-        </select>
-      </div>
-      <input type="text" id="c2muli" class="input" placeholder="Magnitud de carga" />
-      <input type="text" id="c2ini" class="input" placeholder="Inicio de Carga" />
-      <input type="text" id="c2fin" class="input" placeholder="Fin de Carga" />
-    </div>
-  </div>
-
-  <!-- Carga 3 -->
-<div class="column is-one-sixth">
-  <div class="pretty-box">
-    <label class="label">Carga 3</label>
-
-    <label class="label">Tipo de carga</label>
-    <div class="field has-addons">
-      <div class="control is-expanded">
-        <div class="select is-fullwidth">
-          <select id="c3tipo">
-            <option value="1">Sin Carga</option>
-            <option value="0">Carga distribuida</option>
-            <option value="-1">Carga puntual</option>
-            <option value="-2">Momento puntual</option>
-          </select>
+  <div class="columns" style="margin-top:45px">
+    <div class="column is-one-fourth"> 
+      <div class="field">
+        <label class="label">Largo de la viga</label>
+        <div class="control">
+          <input type="text" id="largo"/>
         </div>
       </div>
+
+      <!-- Apoyo 1 -->
+      <label class="label">Apoyo 1 </label>
+      <div class="field">
+        <label class="label">Posición</label>
+        <input type="text" id="a1pos"/>
+      </div>
+      <label class="label">Tipo de Restricción</label>
+      <div class="field has-addons">
+        <div class="control is-expanded">
+          <div class="select">
+            <select name="operation" id="a1res">
+              <option value="1">Fuerza</option>
+              <option value="2">Momento</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Apoyo 2 -->
+      <label class="label">Apoyo 2 </label>
+      <div class="field">
+        <label class="label">Posición</label>
+        <input type="text" id="a2pos"/>
+      </div>
+      <label class="label">Tipo de Restricción</label>
+      <div class="field has-addons">
+        <div class="control is-expanded">
+          <div class="select">
+            <select name="operation" id="a2res">
+              <option value="1">Fuerza</option>
+              <option value="2">Momento</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>   
+
+    <!-- Carga 1 -->
+    <div class="column is-one-fourth">
+      <label class="label">Carga 1</label>
+      <label class="label">Tipo de carga</label>
+      <div class="field has-addons">
+        <div class="control is-expanded">
+          <div class="select">
+            <select name="operation" id="c1tipo">
+              <option value="0">Carga distribuida</option>
+              <option value="-1">Carga puntual</option>
+              <option value="-2">Momento puntual</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Magnitud de carga</label>
+        <input type="text" id="c1muli"/>
+      </div>
+      <div class="field">
+        <label class="label">Inicio de Carga</label>
+        <input type="text" id="c1ini"/>     
+      </div>
+      <div class="field">
+        <label class="label">Fin de Carga </label>
+        <input type="text" placeholder="Solo cargas distribuidas" id="c1fin"/>     
+      </div>
     </div>
 
-    <div class="field">
-      <label class="label">Magnitud de carga</label>
-      <input type="text" id="c3muli" class="input" />
+    <!-- Carga 2 -->
+    <div class="column is-one-fourth">
+      <label class="label">Carga 2</label>
+      <label class="label">Tipo de carga</label>
+      <div class="field has-addons">
+        <div class="control is-expanded">
+          <div class="select">
+            <select name="operation" id="c2tipo">
+              <option value="1">Sin Carga</option>
+              <option value="0">Carga distribuida</option>
+              <option value="-1">Carga puntual</option>
+              <option value="-2">Momento puntual</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Magnitud de carga</label>
+        <input type="text" id="c2muli"/>
+      </div>
+      <div class="field">
+        <label class="label">Inicio de Carga</label>
+        <input type="text" id="c2ini"/>     
+      </div>
+      <div class="field">
+        <label class="label">Fin de Carga</label>
+        <input type="text" placeholder="Solo cargas distribuidas" id="c2fin"/>     
+      </div>
     </div>
 
-    <div class="field">
-      <label class="label">Inicio de Carga</label>
-      <input type="text" id="c3ini" class="input" />
-    </div>
+    <!-- Carga 3 -->
+    <div class="column is-one-fourth">
+      <label class="label">Carga 3</label>
+      <label class="label">Tipo de carga</label>
+      <div class="field has-addons">
+        <div class="control is-expanded">
+          <div class="select">
+            <select name="operation" id="c3tipo">
+              <option value="1">Sin Carga</option>
+              <option value="0">Carga distribuida</option>
+              <option value="-1">Carga puntual</option>
+              <option value="-2">Momento puntual</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Magnitud de carga</label>
+        <input type="text" id="c3muli"/>
+      </div>
+      <div class="field">
+        <label class="label">Inicio de Carga</label>
+        <input type="text" id="c3ini"/>     
+      </div>
+      <div class="field">
+        <label class="label">Fin de Carga</label>
+        <input type="text" placeholder="Solo cargas distribuidas" id="c3fin"/>     
+      </div>
 
-    <div class="field">
-      <label class="label">Fin de Carga</label>
-      <input type="text" id="c3fin" class="input" />
+      <!-- Botón -->
+      <button id="plot-button" type="button" class="button is-primary" onClick="document.getElementById('evtMsg').innerHTML=100" class="button">Plot</button>
     </div>
   </div>
-</div>
-</div> <!-- cierre del bloque .columns -->
 
-<!-- Botón Plot abajo y centrado -->
-<div class="has-text-centered" style="margin-top: 20px;">
-  <button id="plot-button" type="button" class="button is-primary" onClick="document.getElementById('evtMsg').innerHTML=100">Plot</button>
-</div>
-
-  
   <hr>
-<!-- <div class="column is-one-half"> -->
   <div id="output"></div>
-<!-- </div> -->
-  
-</div> 
 </div>
-  <!-- </div>
-</div> -->
-  
+
 <!-- Footer -->
 <footer class="footer">
-    <div class="content has-text-centered">
-        <p>
-            Desarrollado por <strong>Colo Guzmán</strong></a>
-        </p>
-    </div>
+  <div class="content has-text-centered">
+    <p>
+      Desarrollado por <strong>Colo Guzmán</strong>
+    </p>
+  </div>
 </footer>
 
 <py-script src="./main.py"></py-script>
