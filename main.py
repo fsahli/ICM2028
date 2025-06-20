@@ -152,5 +152,8 @@ async def plot_it(*args, **kwargs):
 
     plt.tight_layout()
     return fig
+async def plot_it_wrapper():
+    fig = await plot_it()
+    display(fig, target="output", append=False)
 
     
