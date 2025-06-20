@@ -154,10 +154,9 @@
 
     <div class="columns is-multiline is-variable is-4 is-centered">
     <!-- Carga 1 -->
-    <div class="column is-one-third">
+    <div class="column is-one-fifth">
       <div class="pretty-box">
         <label class="label">Carga 1</label>
-  
         <label class="label">Tipo de carga</label>
         <div class="field has-addons">
           <div class="control is-expanded">
@@ -170,29 +169,25 @@
             </div>
           </div>
         </div>
-  
         <div class="field">
           <label class="label">Magnitud de carga</label>
-          <input type="text" id="c1muli" />
+          <input type="text" id="c1muli"/>
         </div>
-  
         <div class="field">
           <label class="label">Inicio de Carga</label>
-          <input type="text" id="c1ini" />
+          <input type="text" id="c1ini"/>
         </div>
-  
         <div class="field">
           <label class="label">Fin de Carga</label>
-          <input type="text" placeholder="Solo cargas distribuidas" id="c1fin" />
+          <input type="text" placeholder="Solo cargas distribuidas" id="c1fin"/>
         </div>
       </div>
     </div>
   
     <!-- Carga 2 -->
-    <div class="column is-one-third">
+    <div class="column is-one-fifth">
       <div class="pretty-box">
         <label class="label">Carga 2</label>
-  
         <label class="label">Tipo de carga</label>
         <div class="field has-addons">
           <div class="control is-expanded">
@@ -206,29 +201,25 @@
             </div>
           </div>
         </div>
-  
         <div class="field">
           <label class="label">Magnitud de carga</label>
-          <input type="text" id="c2muli" />
+          <input type="text" id="c2muli"/>
         </div>
-  
         <div class="field">
           <label class="label">Inicio de Carga</label>
-          <input type="text" id="c2ini" />
+          <input type="text" id="c2ini"/>
         </div>
-  
         <div class="field">
           <label class="label">Fin de Carga</label>
-          <input type="text" placeholder="Solo cargas distribuidas" id="c2fin" />
+          <input type="text" placeholder="Solo cargas distribuidas" id="c2fin"/>
         </div>
       </div>
     </div>
   
     <!-- Carga 3 -->
-    <div class="column is-one-third">
+    <div class="column is-one-fifth">
       <div class="pretty-box">
         <label class="label">Carga 3</label>
-  
         <label class="label">Tipo de carga</label>
         <div class="field has-addons">
           <div class="control is-expanded">
@@ -242,29 +233,27 @@
             </div>
           </div>
         </div>
-  
         <div class="field">
           <label class="label">Magnitud de carga</label>
-          <input type="text" id="c3muli" />
+          <input type="text" id="c3muli"/>
         </div>
-  
         <div class="field">
           <label class="label">Inicio de Carga</label>
-          <input type="text" id="c3ini" />
+          <input type="text" id="c3ini"/>
         </div>
-  
         <div class="field">
           <label class="label">Fin de Carga</label>
-          <input type="text" placeholder="Solo cargas distribuidas" id="c3fin" />
+          <input type="text" placeholder="Solo cargas distribuidas" id="c3fin"/>
         </div>
       </div>
     </div>
   </div>
+  
+  <!-- Botón centrado -->
+  <div class="has-text-centered" style="margin-top: 20px;">
+    <button id="plot-button" type="button" onClick="document.getElementById('evtMsg').innerHTML=100">Plot</button>
+  </div>
 
-
-    <!-- Botón -->
-      
-    <button id="plot-button" type="button" class="button is-primary" onClick="document.getElementById('evtMsg').innerHTML=100" class="button">Plot</button>
     </div>
     </div>
 
