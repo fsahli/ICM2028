@@ -66,7 +66,7 @@ async def plot_it(*args, **kwargs):
     c33 = int(c3tipo_element.value)
     A1 = [a11,a12]
     A2 = [a21,a22]
-        
+    print("Se ejecutó plot_it()") 
     x = np.linspace(0,L, 1000)
     qs = []
     if c13 == 0:
