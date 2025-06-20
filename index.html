@@ -195,7 +195,8 @@
 
     <!-- Botón -->
       
-    <py-button class="button is-primary" py-click="plot_it_wrapper()">Plot</py-button>
+    <button onclick="pyodide.runPythonAsync('plot_it_wrapper()')">Plot</button>
+
 
     </div>
     </div>
