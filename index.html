@@ -9,23 +9,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
     <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
-    <py-config src="./pyscript.toml"></py-config>
-    <!--  Fondo rosado -->
-    <style>
-  body {
-    background-color: #fce4ec;
-  }
-      .hero.is-primary {
-    background-color: #ec407a !important;
-  }
-</style>
-
+     <py-config src="./pyscript.toml"></py-config>
   </head>  
   
 
 <body>
 
-
+    <div hidden id="evtMsg">0</div>
 <!-- Header -->
 <section class="hero is-primary is-small">
     <div class="hero-body">
@@ -195,10 +185,7 @@
 
     <!-- Botón -->
       
-    <py-button class="button is-primary" py-click="plot_it_wrapper()">Plot</py-button>
-
-
-
+    <button id="plot-button" type="button" class="button is-primary" onClick="document.getElementById('evtMsg').innerHTML=100" class="button">Plot</button>
     </div>
     </div>
 
@@ -219,7 +206,7 @@
 <footer class="footer">
     <div class="content has-text-centered">
         <p>
-            Desarrollado por <strong>Colomba Guzmán</strong></a>
+            Desarrollado por <strong>Carlos Cabrera & Francisco Sahli</strong></a>
         </p>
     </div>
 </footer>
