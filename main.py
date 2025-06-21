@@ -259,11 +259,11 @@ def dibujar_viga_y_cargas(L, A1, A2, qs, x_max_m):
 
         ##cargas distribuidas####
         elif tipo == 0 and magnitud != 0:
-            # Verifica si ya se graficó la contraparte opuesta (misma pos y -magnitud)
+            # Evitar dibujar la otra mitad (si ya existe la opuesta)
             if any(q2[0] == -magnitud and q2[1] == pos and q2[2] == 0 for q2 in qs):
-                continue  # Evita dibujar ambas mitades
+                continue
         
-            # Buscar fin de la carga distribuida (la otra mitad simétrica con magnitud opuesta)
+            # Encontrar el inicio y fin de la carga distribuida
             for q2 in qs:
                 if q2[0] == -magnitud and q2[2] == 0:
                     inicio = min(pos, q2[1])
@@ -271,29 +271,22 @@ def dibujar_viga_y_cargas(L, A1, A2, qs, x_max_m):
                     break
             else:
                 inicio = pos
-                fin = pos + 1  # fallback si no se encuentra la otra mitad
+                fin = pos + 1
         
+            # Dibujar flechas verticales hacia abajo
             xs = np.linspace(inicio, fin, 10)
-            altura = abs(magnitud) * 0.5  # escala para no hacer flechas tan largas
+            altura = abs(magnitud) * 0.5  # Altura visual de la flecha
         
             for xi in xs:
-                if magnitud > 0:
-                    y_start = 0
-                    y_end = altura  # hacia arriba
-                else:
-                    y_start = altura  # parte arriba
-                    y_end = 0        # va hacia abajo
+                ax.arrow(xi, altura, 0, -altura,
+                         head_width=0.15, head_length=0.15,
+                         fc='#ab47bc', ec='#ab47bc')
         
-                ax.annotate(
-                    '', xy=(xi, y_end), xytext=(xi, y_start),
-                    arrowprops=dict(arrowstyle='-|>', color='#ab47bc', lw=1.5)
-                )
-        
-            # Etiqueta en el centro
-            ax.text((inicio + fin) / 2, y_end + (0.3 if magnitud > 0 else -0.5),
-                    f'{magnitud:.0f} N/m', ha='center', fontsize=9, weight='bold')
-        
-                        
+            # Texto con el valor de la carga en el centro del tramo
+            ax.text((inicio + fin) / 2, altura + 0.2,
+                    f'{magnitud:.0f} N/m', ha='center',
+                    fontsize=9, weight='bold')
+
                 
 
 
