@@ -280,7 +280,7 @@ def dibujar_viga_y_cargas(L, A1, A2, qs, x_max_m):
             for xi in xs:
                 ax.arrow(xi, altura, 0, -altura,
                          head_width=0.15, head_length=0.15,
-                         fc='#ab47bc', ec='#ab47bc')
+                         fc="#d81b60", ec="#d81b60")
         
             # Texto con el valor de la carga en el centro del tramo
             ax.text((inicio + fin) / 2, altura + 0.2,
