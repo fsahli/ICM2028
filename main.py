@@ -200,21 +200,36 @@ def dibujar_viga_y_cargas(L, A1, A2, qs):
 
 
         elif tipo == -2 and magnitud != 0:
-            radius = 0.3
-            theta = np.linspace(0, np.pi, 100) if magnitud > 0 else np.linspace(-np.pi, 0, 100)
-            x_arc = pos + radius * np.cos(theta)
-            y_arc = -0.5 + radius * np.sin(theta)
-            ax.plot(x_arc, y_arc, color="#d81b60", linewidth=2)
+            radius = 0.4
+            center_y = -0.5  # centro en y = -0.5
         
-            # Flecha en el extremo (pico de momento)
+            # Ángulo de barrido más cerrado para flecha estilizada
+            angle_span = np.pi / 1.5
+        
+            if magnitud > 0:
+                theta = np.linspace(np.pi, np.pi - angle_span, 100)
+            else:
+                theta = np.linspace(0, angle_span, 100)
+        
+            x_arc = pos + radius * np.cos(theta)
+            y_arc = center_y + radius * np.sin(theta)
+        
+            ax.plot(x_arc, y_arc, color="#e91e63", linewidth=2)
+        
+            # Flecha en el extremo
             punta_x = x_arc[-1]
             punta_y = y_arc[-1]
             dx = x_arc[-1] - x_arc[-2]
             dy = y_arc[-1] - y_arc[-2]
-            ax.arrow(punta_x, punta_y, dx, dy, head_width=0.1, head_length=0.1, fc="#d81b60", ec="#d81b60")
         
-            # Texto encima de la curva
-            ax.text(pos, -0.1, f'{magnitud:.0f} Nm', ha='center', fontsize=9, weight='bold')
+            ax.arrow(punta_x, punta_y, dx, dy,
+                     head_width=0.08, head_length=0.08,
+                     fc="#e91e63", ec="#e91e63")
+        
+            # Texto justo sobre el centro
+            ax.text(pos, center_y + 0.25, f'{magnitud:.0f} Nm',
+                    ha='center', fontsize=9, weight='bold', color="#e91e63")
+
 
         elif tipo == 0 and magnitud > 0:  # Solo graficamos la parte positiva
             # Encontrar fin de la carga: la que tiene misma magnitud pero negativa
