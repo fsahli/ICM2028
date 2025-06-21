@@ -169,7 +169,7 @@ async def plot_it(*args, **kwargs):
 
     
     # Mostrar y cerrar figuras para evitar acumulación
-    display(fig_corte, target="output", append=False)
+    display(fig_corte, target="output", append=True)
     plt.close(fig_corte)  # <- evita el warning
     
     display(fig_momento, target="output", append=True)
