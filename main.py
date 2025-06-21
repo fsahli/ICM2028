@@ -177,7 +177,18 @@ async def plot_it(*args, **kwargs):
     return None
     
 def dibujar_viga_y_cargas(L, A1, A2, qs):
-    fig, ax = plt.subplots(figsize=(8, 2))
+    #  Calcular magnitud más grande de flechas (cargas distribuidas y puntuales)
+    max_magn = max((abs(q[0]) for q in qs if q[2] in [0, 1]), default=1)
+
+    # Margen visual adicional
+    margen = 1.0
+
+    # Crear figura con altura proporcional
+    altura_total = max(3.5, max_magn + margen)  # mínimo 3.5 para apoyar bien los triángulos
+    fig, ax = plt.subplots(figsize=(8, altura_total / 1.5))
+
+    # Limitar eje Y desde mínimo -2.5 (para apoyos) hasta donde llegue la flecha
+    ax.set_ylim(-2.5, max_magn + 1.5)
 
     # Viga 
     viga_rect = plt.Rectangle((0, -1), L, 1, color=#e91e63)
