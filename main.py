@@ -181,10 +181,14 @@ async def plot_it(*args, **kwargs):
     
     # Mostrar el resultado en el HTML
     output.innerHTML += f"<p><strong>Momento máximo:</strong> {momento_max:.2f} Nm en x = {x_momento_max:.2f} m</p>"
+    
+    # Encontrar el máximo absoluto del momento
+    idx_max_m = np.argmax(np.abs(M))
+    x_max_m = x[idx_max_m]
 
     return None
     
-def dibujar_viga_y_cargas(L, A1, A2, qs):
+def dibujar_viga_y_cargas(L, A1, A2, qs, x_max_m):
     # Calcular magnitud máxima (positiva o negativa)
     max_magn = max((abs(q[0]) for q in qs if q[2] in [0, 1]), default=1)
 
@@ -295,6 +299,8 @@ def dibujar_viga_y_cargas(L, A1, A2, qs):
             triangle = plt.Polygon([[x - 0.3, -2], [x + 0.3, -2], [x, -1]], color="#ec407a")
             ax.add_patch(triangle)
 
+    # Línea punteada indicando el lugar del momento máximo
+    ax.plot([x_max_m, x_max_m], [-1, 0], color="#d81b60", linestyle="--", linewidth=2)
 
     # Ejes tipo plano cartesiano con cuadrícula
     ax.spines['left'].set_position('zero')
