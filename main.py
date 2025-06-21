@@ -185,18 +185,18 @@ async def plot_it(*args, **kwargs):
     return None
     
 def dibujar_viga_y_cargas(L, A1, A2, qs):
-    #  Calcular magnitud más grande de flechas (cargas distribuidas y puntuales)
+    # Calcular magnitud máxima (positiva o negativa)
     max_magn = max((abs(q[0]) for q in qs if q[2] in [0, 1]), default=1)
 
-    # Margen visual adicional
+    # Margen visual extra
     margen = 1.0
 
-    # Crear figura con altura proporcional
-    altura_total = max(3.5, max_magn + margen)  # mínimo 3.5 para apoyar bien los triángulos
-    fig, ax = plt.subplots(figsize=(8, altura_total / 1.5))
+    # Altura total de figura: debe considerar tanto hacia arriba como hacia abajo
+    altura_total = max(4, max_magn + margen + 2.5)  # 2.5 para espacio de apoyos
+    fig, ax = plt.subplots(figsize=(10, altura_total / 1.5))  # ancho fijo, alto proporcional
 
-    # Limitar eje Y desde mínimo -2.5 (para apoyos) hasta donde llegue la flecha
-    ax.set_ylim(-2.5, max_magn + 1.5)
+    # Eje Y: desde mínimo (para ver apoyos) hasta máximo (flechas y texto)
+    ax.set_ylim(-2.5, max_magn + margen + 1)
 
     # Viga 
     viga_rect = plt.Rectangle((0, -1), L, 1, color="grey")
@@ -251,7 +251,7 @@ def dibujar_viga_y_cargas(L, A1, A2, qs):
 
 
         elif tipo == 0 and magnitud != 0:
-            # Buscar el fin de la carga distribuida
+            # Buscar el fin de la carga distribuida (la otra mitad simétrica con magnitud opuesta)
             for q2 in qs:
                 if q2[0] == -magnitud and q2[2] == 0:
                     inicio = min(pos, q2[1])
@@ -259,28 +259,28 @@ def dibujar_viga_y_cargas(L, A1, A2, qs):
                     break
             else:
                 inicio = pos
-                fin = pos + 1  # fallback si no encuentra
+                fin = pos + 1  # fallback si no se encuentra la otra mitad
         
             xs = np.linspace(inicio, fin, 10)
             altura = abs(magnitud)
-            direccion = -1 if magnitud < 0 else 1
         
             for xi in xs:
                 if magnitud > 0:
-                    y0 = 0
-                    dy = magnitud  # va hacia arriba
+                    y0 = 0            # empieza en la viga
+                    dy = altura       # hacia arriba
                 else:
-                    y0 = -magnitud  # parte arriba
-                    dy = -magnitud  # va hacia abajo
-            
+                    y0 = altura       # empieza desde la altura
+                    dy = -altura      # hacia abajo (termina en la viga)
+        
                 ax.arrow(xi, y0, 0, dy,
                          head_width=0.1, head_length=0.15,
                          fc="#ab47bc", ec="#ab47bc")
-
         
-            texto_y = direccion * (altura + 0.3)
+            # Texto: arriba de la punta de la flecha
+            texto_y = altura + 0.3 if magnitud > 0 else altura - 0.3
             ax.text((inicio + fin)/2, texto_y,
                     f'{magnitud:.0f} N/m', ha='center', fontsize=9, weight='bold')
+
 
 
 
