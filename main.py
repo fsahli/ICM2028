@@ -257,7 +257,7 @@ def dibujar_viga_y_cargas(L, A1, A2, qs, x_max_m):
                     ha='center', fontsize=9, weight='bold', color="black")
 
 
-        ##cargas distribuidad#####
+        ##cargas distribuidas#####
         elif tipo == 0 and magnitud != 0:
             # Buscar el fin de la carga distribuida (la otra mitad simétrica con magnitud opuesta)
             for q2 in qs:
@@ -270,26 +270,28 @@ def dibujar_viga_y_cargas(L, A1, A2, qs, x_max_m):
                 fin = pos + 1  # fallback si no se encuentra la otra mitad
         
             xs = np.linspace(inicio, fin, 10)
-            altura = abs(magnitud) * 0.5  # escala para no hacer flechas tan largas
+            altura = abs(magnitud) * 0.5  # escala visual
         
             for xi in xs:
-                # flecha SIEMPRE parte desde y=0.5 (justo arriba de la viga)
-                y_base = 0.5
-                y_top = y_base - altura if magnitud > 0 else y_base + altura
+                if magnitud > 0:
+                    y_base = 0
+                    y_top = altura  # flecha hacia arriba
+                else:
+                    y_base = altura
+                    y_top = 0       # flecha hacia abajo
         
-                # dibuja solo la flecha (sin "cola" extra)
                 ax.annotate(
                     '', xy=(xi, y_top), xytext=(xi, y_base),
                     arrowprops=dict(arrowstyle='-|>', color='#ab47bc', lw=1.5)
                 )
         
-            # Solo mostrar el texto si la carga es positiva
-            if magnitud > 0:
-                ax.text((inicio + fin) / 2, y_top - 0.3,
-                        f'{magnitud:.0f} N/m', ha='center', fontsize=9, weight='bold')
+            # Texto en la punta de las flechas
+            texto_y = altura + 0.3 if magnitud > 0 else -0.3
+            ax.text((inicio + fin) / 2, texto_y,
+                    f'{magnitud:.0f} N/m', ha='center', fontsize=9, weight='bold')
         
-        
-        
+                
+                
 
 
     # Apoyos
