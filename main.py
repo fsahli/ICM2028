@@ -191,7 +191,7 @@ def dibujar_viga_y_cargas(L, A1, A2, qs):
     ax.set_ylim(-2.5, max_magn + 1.5)
 
     # Viga 
-    viga_rect = plt.Rectangle((0, -1), L, 1, color=#e91e63))
+    viga_rect = plt.Rectangle((0, -1), L, 1, color="#e91e63")
     ax.add_patch(viga_rect)
 
     # Cargas
