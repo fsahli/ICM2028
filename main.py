@@ -180,7 +180,12 @@ async def plot_it(*args, **kwargs):
     plt.close(fig_momento)  # <- también lo cierra
     
     # Mostrar el resultado en el HTML
-    output.innerHTML += f"<p><strong>Momento máximo:</strong> {momento_max:.2f} Nm en x = {x_momento_max:.2f} m</p>"
+    output.innerHTML += (
+    f'<p style="font-size: 24px; font-weight: bold; color: #333;">'
+    f'Momento máximo: {momento_max:.2f} Nm en x = {x_momento_max:.2f} m'
+    f'</p>'
+)
+
     
     # Encontrar el máximo absoluto del momento
     idx_max_m = np.argmax(np.abs(M))
