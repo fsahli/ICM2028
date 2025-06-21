@@ -270,35 +270,35 @@ def dibujar_viga_y_cargas(L, A1, A2, qs, x_max_m):
                     ha='center', fontsize=9, weight='bold', color="black")
 
 
-        ##cargas distribuidas##
+        ##cargas distribuias##
         elif tipo == 0 and magnitud != 0:
-            # Evitar dibujar ambas mitades de una carga simétrica
-            if any(q2[0] == -magnitud and q2[2] == 0 for q2 in qs):
-                continue
+            # Verifica si es la primera mitad de una carga simétrica
+            pareja = next((q2 for q2 in qs if q2[0] == -magnitud and q2[2] == 0), None)
+            if pareja and pos > pareja[1]:
+                continue  # ya se graficó la otra mitad
         
-            # Buscar inicio y fin de la carga distribuida
-            for q2 in qs:
-                if q2[0] == -magnitud and q2[2] == 0:
-                    inicio = min(pos, q2[1])
-                    fin = max(pos, q2[1])
-                    break
+            # Define inicio y fin
+            if pareja:
+                inicio = min(pos, pareja[1])
+                fin = max(pos, pareja[1])
             else:
                 inicio = pos
                 fin = pos + 1
         
-            # Dibujar flechas hacia abajo que terminan justo antes de y = 0
+            # Dibujar flechas
             xs = np.linspace(inicio, fin, 10)
             altura = abs(magnitud)
-        
             for xi in xs:
-                ax.arrow(xi, altura, 0, -(altura - 0.025),  # ← se detiene justo antes de tocar la viga
+                y0 = altura
+                dy = -(altura - 0.025)
+                ax.arrow(xi, y0, 0, dy,
                          head_width=0.1, head_length=0.1,
                          color='purple')
         
-            # Texto con el valor de la carga
+            # Etiqueta con magnitud
             ax.text((inicio + fin) / 2, altura + 0.2,
                     f'{magnitud:.0f} N/m',
-                    ha='center', fontsize=10)
+                    ha='center', fontsize=14)
 
                 
 
