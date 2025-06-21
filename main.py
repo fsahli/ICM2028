@@ -118,6 +118,10 @@ async def plot_it(*args, **kwargs):
 
     V = sum(q.integrate()(x) for q in Qs)
     M = -sum(q.integrate().integrate()(x) for q in Qs)
+    # Encontrar el momento máximo absoluto y su ubicación (x)
+    momento_max = np.max(np.abs(M))
+    indice_max = np.argmax(np.abs(M))
+    x_momento_max = x[indice_max]
 
     # Colores personalizados
     color_v = "#7e57c2"    # Morado oscuro
@@ -174,6 +178,10 @@ async def plot_it(*args, **kwargs):
     
     display(fig_momento, target="output", append=True)
     plt.close(fig_momento)  # <- también lo cierra
+    
+    # Mostrar el resultado en el HTML
+    output.innerHTML += f"<p><strong>Momento máximo:</strong> {momento_max:.2f} Nm en x = {x_momento_max:.2f} m</p>"
+
     return None
     
 def dibujar_viga_y_cargas(L, A1, A2, qs):
