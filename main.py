@@ -180,7 +180,7 @@ def dibujar_viga_y_cargas(L, A1, A2, qs):
     fig, ax = plt.subplots(figsize=(8, 2))
 
     # Viga 
-    viga_rect = plt.Rectangle((0, -1), L, 1, color='purple')
+    viga_rect = plt.Rectangle((0, -1), L, 1, color=#e91e63)
     ax.add_patch(viga_rect)
 
     # Cargas
