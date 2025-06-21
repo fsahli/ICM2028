@@ -199,11 +199,23 @@ def dibujar_viga_y_cargas(L, A1, A2, qs):
 
 
 
-        elif tipo == -2:  # Momento puntual
-            circ = plt.Circle((pos, 0.5), 0.25, color="#d81b60", fill=False, linewidth=2)
-            ax.add_patch(circ)
-            ax.text(pos, 0.9, f'{magnitud:.0f}Nm', ha='center', fontsize=8)
-            
+        elif tipo == -2 and magnitud != 0:
+            radius = 0.3
+            theta = np.linspace(0, np.pi, 100) if magnitud > 0 else np.linspace(-np.pi, 0, 100)
+            x_arc = pos + radius * np.cos(theta)
+            y_arc = -0.5 + radius * np.sin(theta)
+            ax.plot(x_arc, y_arc, color="#d81b60", linewidth=2)
+        
+            # Flecha en el extremo (pico de momento)
+            punta_x = x_arc[-1]
+            punta_y = y_arc[-1]
+            dx = x_arc[-1] - x_arc[-2]
+            dy = y_arc[-1] - y_arc[-2]
+            ax.arrow(punta_x, punta_y, dx, dy, head_width=0.1, head_length=0.1, fc="#d81b60", ec="#d81b60")
+        
+            # Texto encima de la curva
+            ax.text(pos, -0.1, f'{magnitud:.0f} Nm', ha='center', fontsize=9, weight='bold')
+
         elif tipo == 0 and magnitud > 0:  # Solo graficamos la parte positiva
             # Encontrar fin de la carga: la que tiene misma magnitud pero negativa
             for q2 in qs:
