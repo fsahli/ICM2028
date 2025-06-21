@@ -204,8 +204,8 @@ def dibujar_viga_y_cargas(L, A1, A2, qs):
             ax.add_patch(circ)
             ax.text(pos, 0.9, f'{magnitud:.0f}Nm', ha='center', fontsize=8)
             
-        elif tipo == 0:  # Carga distribuida constante
-            # Encontrar fin de la carga: buscar la que tiene -magnitud
+        elif tipo == 0 and magnitud > 0:  # Solo graficamos la parte positiva
+            # Encontrar fin de la carga: la que tiene misma magnitud pero negativa
             for q2 in qs:
                 if q2[0] == -magnitud and q2[2] == 0:
                     inicio = min(pos, q2[1])
@@ -213,20 +213,17 @@ def dibujar_viga_y_cargas(L, A1, A2, qs):
                     break
             else:
                 inicio = pos
-                fin = pos + 1  # backup si no se encuentra
+                fin = pos + 1
         
             xs = np.linspace(inicio, fin, 10)
-            altura = abs(magnitud)  # largo visual de la flecha
-            direccion = np.sign(magnitud)  # +1 o -1
+            altura = abs(magnitud)
         
             for xi in xs:
-                ax.arrow(xi, 0, 0, direccion * altura,
+                ax.arrow(xi, 0, 0, altura,
                          head_width=0.1, head_length=0.15,
                          fc="#ab47bc", ec="#ab47bc")
         
-            # Texto: un poco más allá de la punta de la flecha
-            texto_y = direccion * (altura + 0.3)
-            ax.text((inicio + fin)/2, texto_y,
+            ax.text((inicio + fin)/2, altura + 0.3,
                     f'{magnitud:.0f} N/m', ha='center', fontsize=9, weight='bold')
 
 
