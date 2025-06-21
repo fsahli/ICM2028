@@ -257,13 +257,9 @@ def dibujar_viga_y_cargas(L, A1, A2, qs, x_max_m):
                     ha='center', fontsize=9, weight='bold', color="black")
 
 
-        ##cargas distribuidas####
+        ##cargas distribuidas###
         elif tipo == 0 and magnitud != 0:
-            # Evitar dibujar la otra mitad (si ya existe la opuesta)
-            if any(q2[0] == -magnitud and q2[1] == pos and q2[2] == 0 for q2 in qs):
-                continue
-        
-            # Encontrar el inicio y fin de la carga distribuida
+            # Buscar inicio y fin de la carga distribuida
             for q2 in qs:
                 if q2[0] == -magnitud and q2[2] == 0:
                     inicio = min(pos, q2[1])
@@ -273,19 +269,19 @@ def dibujar_viga_y_cargas(L, A1, A2, qs, x_max_m):
                 inicio = pos
                 fin = pos + 1
         
-            # Dibujar flechas verticales hacia abajo
+            # Dibujar flechas hacia abajo que terminen en y=0
             xs = np.linspace(inicio, fin, 10)
-            altura = abs(magnitud) * 0.5  # Altura visual de la flecha
+            altura = abs(magnitud)  # flechas parten desde y=altura y terminan en y=0
         
             for xi in xs:
                 ax.arrow(xi, altura, 0, -altura,
-                         head_width=0.15, head_length=0.15,
-                         fc="#d81b60", ec="#d81b60")
+                         head_width=0.1, head_length=0.1,
+                         color='purple')  # cambia aquí el color si quieres
         
-            # Texto con el valor de la carga en el centro del tramo
+            # Texto con el valor de la carga
             ax.text((inicio + fin) / 2, altura + 0.2,
-                    f'{magnitud:.0f} N/m', ha='center',
-                    fontsize=9, weight='bold')
+                    f'{magnitud:.0f} N/m',
+                    ha='center', fontsize=10)
 
                 
 
