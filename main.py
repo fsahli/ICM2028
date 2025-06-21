@@ -258,9 +258,17 @@ def dibujar_viga_y_cargas(L, A1, A2, qs):
             direccion = -1 if magnitud < 0 else 1
         
             for xi in xs:
-                ax.arrow(xi, 0, 0, direccion * altura,
+                if magnitud > 0:
+                    y0 = 0
+                    dy = magnitud  # va hacia arriba
+                else:
+                    y0 = -magnitud  # parte arriba
+                    dy = -magnitud  # va hacia abajo
+            
+                ax.arrow(xi, y0, 0, dy,
                          head_width=0.1, head_length=0.15,
                          fc="#ab47bc", ec="#ab47bc")
+
         
             texto_y = direccion * (altura + 0.3)
             ax.text((inicio + fin)/2, texto_y,
