@@ -262,26 +262,26 @@ def dibujar_viga_y_cargas(L, A1, A2, qs):
                 fin = pos + 1  # fallback si no se encuentra la otra mitad
         
             xs = np.linspace(inicio, fin, 10)
-            altura = abs(magnitud)
+            altura = abs(magnitud) * 0.5  # escala para no hacer flechas tan largas
         
             for xi in xs:
-                if magnitud > 0:
-                    y0 = 0            # empieza en la viga
-                    dy = altura       # hacia arriba
-                else:
-                    y0 = altura       # empieza desde la altura
-                    dy = -altura      # hacia abajo (termina en la viga)
+                # flecha SIEMPRE parte desde y=0.5 (justo arriba de la viga)
+                y_base = 0.5
+                y_top = y_base - altura if magnitud > 0 else y_base + altura
         
-                ax.arrow(xi, y0, 0, dy,
-                         head_width=0.1, head_length=0.15,
-                         fc="#ab47bc", ec="#ab47bc")
+                # dibuja solo la flecha (sin "cola" extra)
+                ax.annotate(
+                    '', xy=(xi, y_top), xytext=(xi, y_base),
+                    arrowprops=dict(arrowstyle='-|>', color='#ab47bc', lw=1.5)
+                )
         
-            # Texto: arriba de la punta de la flecha
-            texto_y = altura + 0.3 if magnitud > 0 else altura - 0.3
-            ax.text((inicio + fin)/2, texto_y,
-                    f'{magnitud:.0f} N/m', ha='center', fontsize=9, weight='bold')
-
-
+            # Solo mostrar el texto si la carga es positiva
+            if magnitud > 0:
+                ax.text((inicio + fin) / 2, y_top - 0.3,
+                        f'{magnitud:.0f} N/m', ha='center', fontsize=9, weight='bold')
+        
+        
+        
 
 
     # Apoyos
