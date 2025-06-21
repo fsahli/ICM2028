@@ -186,7 +186,7 @@ def dibujar_viga_y_cargas(L, A1, A2, qs):
     # Cargas
     for q in qs:
         magnitud, pos, tipo = q
-        if tipo == -1:  # Carga puntual
+        if tipo == -1 and magnitud != 0:  # Solo dibujar si magnitud es distinta de cero
             altura = abs(magnitud)
             direccion = np.sign(magnitud)
             ax.arrow(pos, 0, 0, direccion * altura,
