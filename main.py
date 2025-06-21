@@ -257,9 +257,13 @@ def dibujar_viga_y_cargas(L, A1, A2, qs, x_max_m):
                     ha='center', fontsize=9, weight='bold', color="black")
 
 
-        ##cargas distribuidas#####
+        ##cargas distribuidas####
         elif tipo == 0 and magnitud != 0:
-            # Buscar el fin de la carga distribuida (la otra mitad simétrica con magnitud opuesta)
+            # Verifica si ya se graficó la contraparte opuesta (misma pos y -magnitud)
+            if any(q2[0] == -magnitud and q2[1] == pos and q2[2] == 0 for q2 in qs):
+                continue  # Evita dibujar ambas mitades
+        
+            # Buscar fin de la carga distribuida (la otra mitad simétrica con magnitud opuesta)
             for q2 in qs:
                 if q2[0] == -magnitud and q2[2] == 0:
                     inicio = min(pos, q2[1])
@@ -270,27 +274,26 @@ def dibujar_viga_y_cargas(L, A1, A2, qs, x_max_m):
                 fin = pos + 1  # fallback si no se encuentra la otra mitad
         
             xs = np.linspace(inicio, fin, 10)
-            altura = abs(magnitud) * 0.5  # escala visual
+            altura = abs(magnitud) * 0.5  # escala para no hacer flechas tan largas
         
             for xi in xs:
                 if magnitud > 0:
-                    y_base = 0
-                    y_top = altura  # flecha hacia arriba
+                    y_start = 0
+                    y_end = altura  # hacia arriba
                 else:
-                    y_base = altura
-                    y_top = 0       # flecha hacia abajo
+                    y_start = altura  # parte arriba
+                    y_end = 0        # va hacia abajo
         
                 ax.annotate(
-                    '', xy=(xi, y_top), xytext=(xi, y_base),
+                    '', xy=(xi, y_end), xytext=(xi, y_start),
                     arrowprops=dict(arrowstyle='-|>', color='#ab47bc', lw=1.5)
                 )
         
-            # Texto en la punta de las flechas
-            texto_y = altura + 0.3 if magnitud > 0 else -0.3
-            ax.text((inicio + fin) / 2, texto_y,
+            # Etiqueta en el centro
+            ax.text((inicio + fin) / 2, y_end + (0.3 if magnitud > 0 else -0.5),
                     f'{magnitud:.0f} N/m', ha='center', fontsize=9, weight='bold')
         
-                
+                        
                 
 
 
@@ -302,7 +305,7 @@ def dibujar_viga_y_cargas(L, A1, A2, qs, x_max_m):
             ax.add_patch(triangle)
 
     # Línea punteada indicando el lugar del momento máximo
-    ax.plot([x_max_m, x_max_m], [-1, 0], color="#d81b60", linestyle="--", linewidth=2)
+    ax.plot([x_max_m, x_max_m], [-1, 0], color="#00bcd4", linestyle="--", linewidth=2)
 
     # Ejes tipo plano cartesiano con cuadrícula
     ax.spines['left'].set_position('zero')
