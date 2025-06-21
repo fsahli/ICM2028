@@ -330,7 +330,7 @@ def dibujar_viga_y_cargas(L, A1, A2, qs, x_max_m):
     ax.grid(True, linestyle='--', linewidth=0.5)
 
     ax.set_xlim(-1, L + 1)
-    ax.set_ylim(-2.5, 2.5)
+    
     ax.set_title("Viga con Cargas Aplicadas")
     display(fig, target="output", append=False)
     plt.close(fig)
