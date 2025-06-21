@@ -203,10 +203,14 @@ def dibujar_viga_y_cargas(L, A1, A2, qs, x_max_m):
 
     # Límites del gráfico
     ax.set_xlim(-1, L + 1)   # Eje X depende del largo de la viga
-    ax.set_ylim(-5, 5)       # Eje Y fijo para visualizar todas las cargas bien
-    ax.set_yticks(np.arange(-5, 6, 1))         # Marcas visibles desde -5 hasta 5
-    ax.tick_params(axis='y', direction='inout')  # Ticks hacia dentro/fuera
-    ax.margins(y=0.01)                          # Evita cortes en los bordes verticales
+    # Mostrar hasta ±5 sin cortes
+    ax.set_ylim(-5.2, 5.2)  # Leve expansión para evitar clipping visual
+    ax.set_yticks(np.arange(-5, 6, 1))
+    ax.tick_params(axis='y', direction='inout', length=6)
+    
+    # Asegura que el marco superior/inferior no tape el borde
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
 
 
     # Viga 
