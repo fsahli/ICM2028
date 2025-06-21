@@ -199,8 +199,16 @@ def dibujar_viga_y_cargas(L, A1, A2, qs, x_max_m):
     altura_total = max(4, max_magn + margen + 2.5)  # 2.5 para espacio de apoyos
     fig, ax = plt.subplots(figsize=(10, altura_total / 1.5))  # ancho fijo, alto proporcional
 
-    # Eje Y: desde mínimo (para ver apoyos) hasta máximo (flechas y texto)
-    ax.set_ylim(-2.5, max_magn + margen + 1)
+    # Eje Y: desde mínimo (para ver apoyos) hasta máxima carga
+    # Calcular la magnitud máxima de todas las cargas (puntuales y distribuidas)
+    magnitudes = [abs(q[0]) for q in qs if q[2] in [-1, 0]]
+    magnitud_maxima = max(magnitudes + [1])  # al menos 1 para evitar altura cero
+    
+    # Altura total considerando texto y puntas de flechas
+    altura_grafica = magnitud_maxima + 1.5  # margen adicional
+    
+    ax.set_ylim(-2.5, altura_grafica)
+
 
     # Viga 
     viga_rect = plt.Rectangle((0, -1), L, 1, color="grey")
@@ -276,7 +284,7 @@ def dibujar_viga_y_cargas(L, A1, A2, qs, x_max_m):
             for xi in xs:
                 ax.arrow(xi, altura, 0, -altura,
                          head_width=0.1, head_length=0.1,
-                         color='purple')  # cambia aquí el color si quieres
+                         color='purple')  
         
             # Texto con el valor de la carga
             ax.text((inicio + fin) / 2, altura + 0.2,
