@@ -204,15 +204,8 @@ def dibujar_viga_y_cargas(L, A1, A2, qs, x_max_m):
     altura_total = max(4, max_magn + margen + 2.5)  # 2.5 para espacio de apoyos
     fig, ax = plt.subplots(figsize=(10, altura_total / 1.5))  # ancho fijo, alto proporcional
 
-    # Eje Y: desde mínimo (para ver apoyos) hasta máxima carga
-    # Calcular la magnitud máxima de todas las cargas (puntuales y distribuidas)
-    magnitudes = [abs(q[0]) for q in qs if q[2] in [-1, 0]]
-    magnitud_maxima = max(magnitudes + [1])  # al menos 1 para evitar altura cero
-    
-    # Altura total considerando texto y puntas de flechas
-    altura_grafica = magnitud_maxima + 1.5  # margen adicional
-    
-    ax.set_ylim(-2.5, altura_grafica)
+    # Eje y
+    ax.set_ylim(-5, 5)
 
 
     # Viga 
@@ -222,16 +215,23 @@ def dibujar_viga_y_cargas(L, A1, A2, qs, x_max_m):
     # Cargas
     for q in qs:
         magnitud, pos, tipo = q
-        if tipo == -1 and magnitud != 0:  # Solo dibujar si magnitud es distinta de cero
-            altura = abs(magnitud)
-            direccion = np.sign(magnitud)
-            ax.arrow(pos, 0, 0, direccion * altura,
-                     head_width=0.2, head_length=0.2,
-                     fc="#7e57c2", ec="#7e57c2")
-            
-            texto_y = direccion * (altura + 0.3)
-            ax.text(pos, texto_y, f'{magnitud:.0f} N',
-                    ha='center', fontsize=9, weight='bold')
+        #fuerza puntual 
+        if tipo == -1 and magnitud != 0:
+            if magnitud > 0:
+                # Flecha hacia arriba desde y = 0 hasta y = 2
+                ax.arrow(pos, 0, 0, 2,
+                         head_width=0.2, head_length=0.2,
+                         fc="#7e57c2", ec="#7e57c2")
+                ax.text(pos, 2.3, f'{magnitud:.0f} N',
+                        ha='center', fontsize=9, weight='bold')
+            else:
+                # Flecha hacia abajo desde y = -1 hasta y = -3
+                ax.arrow(pos, -1, 0, -2,
+                         head_width=0.2, head_length=0.2,
+                         fc="#7e57c2", ec="#7e57c2")
+                ax.text(pos, -3.3, f'{magnitud:.0f} N',
+                        ha='center', fontsize=9, weight='bold')
+
 
 
         ##momento puntuaaal##
@@ -277,28 +277,29 @@ def dibujar_viga_y_cargas(L, A1, A2, qs, x_max_m):
             if pareja and pos > pareja[1]:
                 continue  # ya se graficó la otra mitad
         
-            # Define inicio y fin
-            if pareja:
-                inicio = min(pos, pareja[1])
-                fin = max(pos, pareja[1])
-            else:
-                inicio = pos
-                fin = pos + 1
-        
+            # Largo fijo de 2 unidades
+            inicio = pos
+            fin = pos + 2
+            
             # Dibujar flechas
             xs = np.linspace(inicio, fin, 10)
-            altura = abs(magnitud)
-            for xi in xs:
-                y0 = altura
-                dy = -(altura - 0.025)
-                ax.arrow(xi, y0, 0, dy,
-                         head_width=0.1, head_length=0.1,
-                         color='purple')
-        
-            # Etiqueta con magnitud
-            ax.text((inicio + fin) / 2, altura + 0.2,
-                    f'{magnitud:.0f} N/m',
-                    ha='center', fontsize=14)
+            
+            if magnitud > 0:
+                for xi in xs:
+                    ax.arrow(xi, 0, 0, 2,
+                             head_width=0.1, head_length=0.1,
+                             fc='purple', ec='purple')
+                ax.text((inicio + fin) / 2, 2.3,
+                        f'{magnitud:.0f} N/m',
+                        ha='center', fontsize=14)
+            else:
+                for xi in xs:
+                    ax.arrow(xi, -1, 0, -2,
+                             head_width=0.1, head_length=0.1,
+                             fc='purple', ec='purple')
+                ax.text((inicio + fin) / 2, -3.3,
+                        f'{magnitud:.0f} N/m',
+                        ha='center', fontsize=14)
 
                 
 
