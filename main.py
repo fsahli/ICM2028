@@ -179,16 +179,18 @@ async def plot_it(*args, **kwargs):
 def dibujar_viga_y_cargas(L, A1, A2, qs):
     fig, ax = plt.subplots(figsize=(8, 2))
 
-    # Viga como línea gruesa
-    ax.plot([0, L], [0, 0], color='black', linewidth=6)
+    # Viga 
+    viga_rect = plt.Rectangle((0, -1), L, 1, color='purple')
+    ax.add_patch(viga_rect)
 
     # Cargas
     for q in qs:
         magnitud, pos, tipo = q
         if tipo == -1:  # Puntual
-            ax.arrow(pos, 1.2 * np.sign(-magnitud), 0, -1.2 * np.sign(-magnitud),
-                     head_width=0.2, head_length=0.3, fc="#7e57c2", ec="#7e57c2")
-            ax.text(pos, 1.5 * np.sign(-magnitud), f'{magnitud:.0f}N', ha='center', fontsize=8)
+            flecha_altura = 0.8  # largo de la flecha
+            ax.arrow(pos, 0, 0, -flecha_altura,head_width=0.2, head_length=0.2, fc="#7e57c2", ec="#7e57c2")
+            ax.text(pos, 0.2, f'{magnitud:.0f}N', ha='center', fontsize=8)
+
         elif tipo == -2:  # Momento puntual
             circ = plt.Circle((pos, 0.5), 0.25, color="#d81b60", fill=False, linewidth=2)
             ax.add_patch(circ)
@@ -203,14 +205,16 @@ def dibujar_viga_y_cargas(L, A1, A2, qs):
             if fin:
                 xs = np.linspace(pos, fin, 10)
                 for xi in xs:
-                    ax.arrow(xi, 1, 0, -1, head_width=0.15, head_length=0.2, fc="#ab47bc", ec="#ab47bc")
-                ax.text((pos + fin) / 2, 1.3, f'{magnitud:.0f}N/m', ha='center', fontsize=8)
+                    ax.arrow(xi, 0, 0, -0.7, head_width=0.1, head_length=0.15, fc="#ab47bc", ec="#ab47bc")
+                ax.text((pos + fin) / 2, 0.2, f'{magnitud:.0f}N/m', ha='center', fontsize=8)
 
     # Apoyos
     for tipo, x in [A1, A2]:
         if tipo == 1:
-            triangle = plt.Polygon([[x - 0.3, -1.05], [x + 0.3, -1.05], [x, -1.5]], color="#ec407a")
+            # Triángulo de base en y = -2, punta en y = -1 (debajo de la viga)
+            triangle = plt.Polygon([[x - 0.3, -2], [x + 0.3, -2], [x, -1]], color="#ec407a")
             ax.add_patch(triangle)
+
 
     # Ejes tipo plano cartesiano con cuadrícula
     ax.spines['left'].set_position('zero')
