@@ -211,9 +211,6 @@ def dibujar_viga_y_cargas(L, A1, A2, qs):
         if tipo == 1:
             triangle = plt.Polygon([[x - 0.3, -1.05], [x + 0.3, -1.05], [x, -1.5]], color="#ec407a")
             ax.add_patch(triangle)
-        elif tipo == 2:
-            viga_rect = plt.Rectangle((0, -1), L, 1, color='purple')
-            ax.add_patch(viga_rect)
 
     # Ejes tipo plano cartesiano con cuadrícula
     ax.spines['left'].set_position('zero')
