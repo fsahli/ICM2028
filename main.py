@@ -194,18 +194,16 @@ async def plot_it(*args, **kwargs):
     return None
     
 def dibujar_viga_y_cargas(L, A1, A2, qs, x_max_m):
-    # Calcular magnitud máxima (positiva o negativa)
-    max_magn = max((abs(q[0]) for q in qs if q[2] in [0, 1]), default=1)
+    # --- PLOT ---
+    # Tamaño del gráfico: ancho proporcional al largo de la viga, alto fijo para eje Y [-5, 5]
+    ancho_figura = 0.8 * L + 2  # Ajusta el ancho visual según la longitud de la viga
+    alto_figura = 6             # Altura constante para que todo sea visible en Y
 
-    # Margen visual extra
-    margen = 1.0
+    fig, ax = plt.subplots(figsize=(ancho_figura, alto_figura))
 
-    # Altura total de figura: debe considerar tanto hacia arriba como hacia abajo
-    altura_total = max(4, max_magn + margen + 2.5)  # 2.5 para espacio de apoyos
-    fig, ax = plt.subplots(figsize=(10, altura_total / 1.5))  # ancho fijo, alto proporcional
-
-    # Eje y
-    ax.set_ylim(-5, 5)
+    # Límites del gráfico
+    ax.set_xlim(-1, L + 1)   # Eje X depende del largo de la viga
+    ax.set_ylim(-5, 5)       # Eje Y fijo para visualizar todas las cargas bien
 
 
     # Viga 
