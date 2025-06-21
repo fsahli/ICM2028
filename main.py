@@ -175,48 +175,52 @@ async def plot_it(*args, **kwargs):
     display(fig_momento, target="output", append=True)
     plt.close(fig_momento)  # <- también lo cierra
     return None
-
+    
 def dibujar_viga_y_cargas(L, A1, A2, qs):
     fig, ax = plt.subplots(figsize=(8, 2))
 
-    # Dibujar la viga como línea horizontal
+    # Viga como línea gruesa
     ax.plot([0, L], [0, 0], color='black', linewidth=6)
 
-    # Dibujar cargas
+    # Cargas
     for q in qs:
         magnitud, pos, tipo = q
-        if tipo == -1:  # Carga puntual
-            ax.arrow(pos, 1.5 * np.sign(-magnitud), 0, -1.5 * np.sign(-magnitud), 
+        if tipo == -1:  # Puntual
+            ax.arrow(pos, 1.2 * np.sign(-magnitud), 0, -1.2 * np.sign(-magnitud),
                      head_width=0.2, head_length=0.3, fc="#7e57c2", ec="#7e57c2")
-            ax.text(pos, 1.7 * np.sign(-magnitud), f'{magnitud:.0f}N', ha='center', va='center', fontsize=8)
+            ax.text(pos, 1.5 * np.sign(-magnitud), f'{magnitud:.0f}N', ha='center', fontsize=8)
         elif tipo == -2:  # Momento puntual
-            circ = plt.Circle((pos, 0.6), 0.25, color="#d81b60", fill=False, linewidth=2)
+            circ = plt.Circle((pos, 0.5), 0.25, color="#d81b60", fill=False, linewidth=2)
             ax.add_patch(circ)
-            ax.text(pos, 1.1, f'{magnitud:.0f}Nm', ha='center', fontsize=8)
-        elif tipo == 0:  # Carga distribuida
-            inicio = pos
-            fin = [x[1] for x in qs if x[0] == -magnitud and x[2] == 0]
+            ax.text(pos, 0.9, f'{magnitud:.0f}Nm', ha='center', fontsize=8)
+        elif tipo == 0:  # Distribuida
+            # Buscar el punto final (con -magnitud)
+            fin = None
+            for q2 in qs:
+                if q2[0] == -magnitud and q2[2] == 0:
+                    fin = q2[1]
+                    break
             if fin:
-                xs = np.linspace(inicio, fin[0], 10)
+                xs = np.linspace(pos, fin, 10)
                 for xi in xs:
                     ax.arrow(xi, 1, 0, -1, head_width=0.15, head_length=0.2, fc="#ab47bc", ec="#ab47bc")
-                ax.text((inicio + fin[0]) / 2, 1.3, f'{magnitud:.0f}N/m', ha='center', fontsize=8)
+                ax.text((pos + fin) / 2, 1.3, f'{magnitud:.0f}N/m', ha='center', fontsize=8)
 
-    # Dibujar apoyos
+    # Apoyos
     for tipo, x in [A1, A2]:
-        if tipo == 1:  # Apoyo simple
-            triangle = plt.Polygon([[x-0.3, -0.2], [x+0.3, -0.2], [x, -0.8]], color='gray')
+        if tipo == 1:
+            triangle = plt.Polygon([[x - 0.3, -0.2], [x + 0.3, -0.2], [x, -0.8]], color='gray')
             ax.add_patch(triangle)
-        elif tipo == 2:  # Empotrado o momento
-            ax.add_patch(plt.Rectangle((x-0.1, -1), 0.2, 1, color='black'))
+        elif tipo == 2:
+            ax.add_patch(plt.Rectangle((x - 0.1, -1), 0.2, 1, color='black'))
 
     ax.set_xlim(-1, L + 1)
     ax.set_ylim(-2, 2)
     ax.axis('off')
     ax.set_title("Viga con Cargas Aplicadas")
-
     display(fig, target="output", append=False)
     plt.close(fig)
+
 
 
 
