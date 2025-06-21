@@ -161,4 +161,39 @@
       </div>
       <div class="field">
         <label class="label">Inicio de Carga</label>
+        <input type="text" id="c3ini"/>     
+      </div>
+      <div class="field">
+        <label class="label">Fin de Carga</label>
+        <input type="text" placeholder="Solo cargas distribuidas" id="c3fin"/>     
+      </div>
+
+      <!-- Botón -->
+      <button id="plot-button" type="button" class="button is-primary" onClick="document.getElementById('evtMsg').innerHTML=100" class="button">Plot</button>
+    </div>
+  </div>
+
+  <hr>
+  <div id="output"></div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="content has-text-centered">
+    <p>Desarrollado por <strong>Colo Guzmán</strong></p>
+  </div>
+</footer>
+
+<py-script src="./main.py"></py-script>
+
+</body>
+</html>
+
+      </div>
+      <div class="field">
+        <label class="label">Magnitud de carga</label>
+        <input type="text" id="c3muli"/>
+      </div>
+      <div class="field">
+        <label class="label">Inicio de Carga</label>
         <input type="text" id="c3ini"/>
