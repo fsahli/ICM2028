@@ -217,7 +217,7 @@ def dibujar_viga_y_cargas(L, A1, A2, qs):
                     ha='center', fontsize=9, weight='bold')
 
 
-
+        ##momento puntuaaal##
         elif tipo == -2 and magnitud != 0:
             radius = 0.4
             center_y = -0.5  # centro en y = -0.5
@@ -245,11 +245,15 @@ def dibujar_viga_y_cargas(L, A1, A2, qs):
                      head_width=0.08, head_length=0.08,
                      fc="#e91e63", ec="#e91e63")
         
-            # Texto justo sobre el centro
-            ax.text(pos, center_y - 0.5, f'{magnitud:.0f} Nm', ha='center', fontsize=9, weight='bold', color="#e91e63")
+            # Punto en el centro de aplicación del momento
+            ax.plot(pos, center_y, marker='o', markersize=8, color="#e91e63")
+        
+            # Texto debajo del centro
+            ax.text(pos, center_y - 0.5, f'{magnitud:.0f} Nm',
+                    ha='center', fontsize=9, weight='bold', color="black")
 
 
-
+        ##cargas distribuidad#####
         elif tipo == 0 and magnitud != 0:
             # Buscar el fin de la carga distribuida (la otra mitad simétrica con magnitud opuesta)
             for q2 in qs:
