@@ -209,19 +209,13 @@ def dibujar_viga_y_cargas(L, A1, A2, qs):
     # Apoyos
     for tipo, x in [A1, A2]:
         if tipo == 1:
-            triangle = plt.Polygon([[x - 0.3, 0.2], [x + 0.3, 0.2], [x, 0.8]], color="#ec407a")
+            triangle = plt.Polygon([[x - 0.3, -1.05], [x + 0.3, -1.05], [x, -1.5]], color="#ec407a")
             ax.add_patch(triangle)
         elif tipo == 2:
-            ax.add_patch(plt.Rectangle((x - 0.1, -1), 0.2, 1, color='grey'))
+            viga_rect = plt.Rectangle((0, -1), L, 1, color='purple')
+            ax.add_patch(viga_rect)
 
-    ax.set_xlim(-1, L + 1)
-    ax.set_ylim(-2, 2)
-    ax.axis('off')
-    ax.set_title("Viga con Cargas Aplicadas")
-    display(fig, target="output", append=False)
-    plt.close(fig)
-
-    # Ejes tipo plano cartesiano
+    # Ejes tipo plano cartesiano con cuadrícula
     ax.spines['left'].set_position('zero')
     ax.spines['bottom'].set_position('zero')
     ax.spines['left'].set_linewidth(2)
@@ -230,6 +224,14 @@ def dibujar_viga_y_cargas(L, A1, A2, qs):
     ax.spines['top'].set_color('none')
     ax.tick_params(left=True, bottom=True)
     ax.grid(True, linestyle='--', linewidth=0.5)
+
+    ax.set_xlim(-1, L + 1)
+    ax.set_ylim(-2.5, 2.5)
+    ax.set_title("Viga con Cargas Aplicadas")
+    display(fig, target="output", append=False)
+    plt.close(fig)
+
+    
 
 
 
