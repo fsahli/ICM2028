@@ -186,12 +186,17 @@ def dibujar_viga_y_cargas(L, A1, A2, qs):
     # Cargas
     for q in qs:
         magnitud, pos, tipo = q
-        if tipo == -1:  # Puntual
-            flecha_altura = 0.8  # largo de la flecha
-            altura = 0.7 * np.sign(-magnitud)  # positivo si magnitud negativa (fuerza hacia abajo)
-            ax.arrow(xi, 0, 0, altura, head_width=0.1, head_length=0.15, fc="#ab47bc", ec="#ab47bc")
-            text_y = 0.2 if magnitud < 0 else 0.9
-            ax.text((pos + fin) / 2, text_y, f'{magnitud:.0f} N/m', ha='center', fontsize=9, fontweight='bold', color='#6a1b9a')
+        if tipo == -1:  # Carga puntual
+            altura = abs(magnitud)
+            direccion = np.sign(magnitud)
+            ax.arrow(pos, 0, 0, direccion * altura,
+                     head_width=0.2, head_length=0.2,
+                     fc="#7e57c2", ec="#7e57c2")
+            
+            texto_y = direccion * (altura + 0.3)
+            ax.text(pos, texto_y, f'{magnitud:.0f} N',
+                    ha='center', fontsize=9, weight='bold')
+
 
 
         elif tipo == -2:  # Momento puntual
