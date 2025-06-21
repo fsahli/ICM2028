@@ -246,8 +246,8 @@ def dibujar_viga_y_cargas(L, A1, A2, qs):
                      fc="#e91e63", ec="#e91e63")
         
             # Texto justo sobre el centro
-            ax.text(pos, center_y + 0.25, f'{magnitud:.0f} Nm',
-                    ha='center', fontsize=9, weight='bold', color="#e91e63")
+            ax.text(pos, center_y - 0.5, f'{magnitud:.0f} Nm', ha='center', fontsize=9, weight='bold', color="#e91e63")
+
 
 
         elif tipo == 0 and magnitud != 0:
