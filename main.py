@@ -128,7 +128,7 @@ async def plot_it(*args, **kwargs):
     color_m = "#d81b60"    # Rosado oscuro
 
     #cargas
-    dibujar_viga_y_cargas(L, A1, A2, qs)
+    dibujar_viga_y_cargas(L, A1, A2, qs, x_momento_max)
 
     # ---------- GRÁFICO DE CORTE ----------
     fig_corte, ax1 = plt.subplots()
