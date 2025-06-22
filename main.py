@@ -234,7 +234,7 @@ def dibujar_viga_y_cargas(L, A1, A2, qs, x_max_m):
                 ax.arrow(pos, -1, 0, -2,
                          head_width=0.2, head_length=0.2,
                          fc="#7e57c2", ec="#7e57c2")
-                ax.text(pos, -3.3, f'{magnitud:.0f} N',
+                ax.text(pos, -3.6, f'{magnitud:.0f} N',
                         ha='center', fontsize=9, weight='bold')
 
 
@@ -302,7 +302,7 @@ def dibujar_viga_y_cargas(L, A1, A2, qs, x_max_m):
                     ax.arrow(xi, -1, 0, -2,
                              head_width=0.1, head_length=0.1,
                              fc='purple', ec='purple')
-                ax.text((inicio + fin) / 2, -3.3,
+                ax.text((inicio + fin) / 2, -3.6,
                         f'{magnitud:.0f} N/m',
                         ha='center', fontsize=14)
 
