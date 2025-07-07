@@ -1,217 +1,231 @@
 <!DOCTYPE html>
-
 <html>
   
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Calculadora de Vigas</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-    <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
-    <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
-     <py-config src="./pyscript.toml"></py-config>
-  </head>  
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Calculadora de Vigas</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+  <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+  <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
+  <py-config src="./pyscript.toml"></py-config>
+  <style>
+    body {
+    background-color: #fce4ec;
+    font-family: 'Poppins', sans-serif;
+  }
   
+  .hero.is-primary {
+    background-color: #ec407a !important;
+  }
+  
+  /* Título principal */
+  .hero .title {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 2.5rem;
+    color: white;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    line-height: 1.3;
+  }
+  
+  /* Subtítulo */
+  .hero .subtitle {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    color: #f06292;
+    text-align: center;
+    margin-top: 1rem;
+  }
+  
+  /* Título intermedio */
+  .container .title {
+    font-family: 'Quicksand', sans-serif;
+    color: #d81b60;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  </style>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Quicksand:wght@500&display=swap" rel="stylesheet">
+</head>  
 
 <body>
 
-    <div hidden id="evtMsg">0</div>
+<div hidden id="evtMsg">0</div>
+
 <!-- Header -->
 <section class="hero is-primary is-small">
-    <div class="hero-body">
-        <p class="title is-3">Calculadora de momentos y esfuerzos de corte interno en vigas <span class="tag is-white">v.1</span></p>
-        <p class="subtitle is-6">
-            ICM2028 - Mecánica de materiales
-        </p>
-    </div>
+  <div class="hero-body">
+    <p class="title is-3">Calculadora de momentos y esfuerzos de corte interno en vigas <span class="tag is-white">v.1</span></p>
+    <p class="subtitle is-6">ICM2028 - Mecánica de materiales</p>
+  </div>
 </section>
 
 <div class="container is-fullhd">
+  <p class="title is-3">Momento y Esfuerzo de Corte en vigas</p>
 
-<p class="title is-3">Momento y Esfuerzo de Corte en vigas</p>
-
-
-<div class="columns" style="margin-top:45px">
+  <div class="columns" style="margin-top:45px">
     <div class="column is-one-fourth"> 
-        <div class="field">
-            <label class="label">Largo de la viga</label>
-            <div class="control">
-                <input type="text" id="largo"/>
-            </div>
+      <div class="field">
+        <label class="label">Largo de la viga</label>
+        <div class="control">
+          <input type="text" id="largo"/>
         </div>
+      </div>
 
-
-    <!-- Apoyo 1 -->
-        <!-- <div class="field"> -->
-        <label class="label">Apoyo 1 </label>
-
-        <div class="field">
-            <label class="label">Posición</label>
-            <input type="text" id="a1pos"/>
+      <!-- Apoyo 1 -->
+      <label class="label">Apoyo 1 </label>
+      <div class="field">
+        <label class="label">Posición</label>
+        <input type="text" id="a1pos"/>
+      </div>
+      <label class="label">Tipo de Restricción</label>
+      <div class="field has-addons">
+        <div class="control is-expanded">
+          <div class="select">
+            <select name="operation" id="a1res">
+              <option value="1">Fuerza</option>
+              <option value="2">Momento</option>
+            </select>
+          </div>
         </div>
+      </div>
 
-        <label class="label">Tipo de Restricción</label>
-        <div class="field has-addons">
-            <div class="control is-expanded">
-                <div class="select">
-                <select name="operation" id="a1res">
-                    <option value="1">Fuerza</option>
-                    <option value="2">Momento</option>
-                </select>
-                </div>
-            </div>
+      <!-- Apoyo 2 -->
+      <label class="label">Apoyo 2 </label>
+      <div class="field">
+        <label class="label">Posición</label>
+        <input type="text" id="a2pos"/>
+      </div>
+      <label class="label">Tipo de Restricción</label>
+      <div class="field has-addons">
+        <div class="control is-expanded">
+          <div class="select">
+            <select name="operation" id="a2res">
+              <option value="1">Fuerza</option>
+              <option value="2">Momento</option>
+            </select>
+          </div>
         </div>
-
-
-    <!-- Apoyo 2 -->
-        <label class="label">Apoyo 2 </label>
-
-        <div class="field">
-            <label class="label">Posición</label>
-            <input type="text" id="a2pos"/>
-        </div>
-    
-        <label class="label">Tipo de Restricción</label>
-        <div class="field has-addons">
-            <div class="control is-expanded">
-                <div class="select">
-                <select name="operation" id="a2res">
-                    <option value="1">Fuerza</option>
-                    <option value="2">Momento</option>
-                </select>
-                </div>
-            </div>
-        </div>
-     </div>   
-
+      </div>
+    </div>   
 
     <!-- Carga 1 -->
     <div class="column is-one-fourth">
-  
-        <label class="label">Carga 1</label>
-        <label class="label">Tipo de carga</label>
-        <div class="field has-addons">
-            <div class="control is-expanded">
-                <div class="select">
-                <select name="operation" id="c1tipo">
-                    <option value="0">Carga distribuida</option>
-                    <option value="-1">Carga puntual</option>
-                    <option value="-2">Momento puntual</option>
-                </select>
-                </div>
-            </div>
+      <label class="label">Carga 1</label>
+      <label class="label">Tipo de carga</label>
+      <div class="field has-addons">
+        <div class="control is-expanded">
+          <div class="select">
+            <select name="operation" id="c1tipo">
+              <option value="0">Carga distribuida</option>
+              <option value="-1">Carga puntual</option>
+              <option value="-2">Momento puntual</option>
+            </select>
+          </div>
         </div>
-
-
-        <div class="field">
-            <label class="label">Magnitud de carga</label>
-            <input type="text" id="c1muli"/>
-        </div>
-
-        <div class="field">
-            <label class="label">Inicio de Carga</label>
-            <input type="text" id="c1ini"/>     
-        </div>
-
-        <div class="field">
-            <label class="label">Fin de Carga </label>
-            <input type="text" placeholder="Solo cargas distribuidas" id="c1fin"/>     
-        </div>
+      </div>
+      <div class="field">
+        <label class="label">Magnitud de carga</label>
+        <input type="text" id="c1muli"/>
+      </div>
+      <div class="field">
+        <label class="label">Inicio de Carga</label>
+        <input type="text" id="c1ini"/>     
+      </div>
+      <div class="field">
+        <label class="label">Fin de Carga </label>
+        <input type="text" placeholder="Solo cargas distribuidas" id="c1fin"/>     
+      </div>
     </div>
+
     <!-- Carga 2 -->
     <div class="column is-one-fourth">
-    <label class="label">Carga 2</label>
-    <label class="label">Tipo de carga</label>
-    <div class="field has-addons">
+      <label class="label">Carga 2</label>
+      <label class="label">Tipo de carga</label>
+      <div class="field has-addons">
         <div class="control is-expanded">
-            <div class="select">
+          <div class="select">
             <select name="operation" id="c2tipo">
-                <option value="1">Sin Carga</option>
-                <option value="0">Carga distribuida</option>
-                <option value="-1">Carga puntual</option>
-                <option value="-2">Momento puntual</option>
+              <option value="1">Sin Carga</option>
+              <option value="0">Carga distribuida</option>
+              <option value="-1">Carga puntual</option>
+              <option value="-2">Momento puntual</option>
             </select>
-            </div>
+          </div>
         </div>
-    </div>
-
-    <div class="field">
+      </div>
+      <div class="field">
         <label class="label">Magnitud de carga</label>
         <input type="text" id="c2muli"/>
-    </div>
-
-    <div class="field">
+      </div>
+      <div class="field">
         <label class="label">Inicio de Carga</label>
         <input type="text" id="c2ini"/>     
-    </div>
-
-    <div class="field">
+      </div>
+      <div class="field">
         <label class="label">Fin de Carga</label>
         <input type="text" placeholder="Solo cargas distribuidas" id="c2fin"/>     
-    </div>
+      </div>
     </div>
 
     <!-- Carga 3 -->
     <div class="column is-one-fourth">
-    <label class="label">Carga 3</label>
-    <label class="label">Tipo de carga</label>
-    <div class="field has-addons">
+      <label class="label">Carga 3</label>
+      <label class="label">Tipo de carga</label>
+      <div class="field has-addons">
         <div class="control is-expanded">
-            <div class="select">
+          <div class="select">
             <select name="operation" id="c3tipo">
-                <option value="1">Sin Carga</option>
-                <option value="0">Carga distribuida</option>
-                <option value="-1">Carga puntual</option>
-                <option value="-2">Momento puntual</option>
+              <option value="1">Sin Carga</option>
+              <option value="0">Carga distribuida</option>
+              <option value="-1">Carga puntual</option>
+              <option value="-2">Momento puntual</option>
             </select>
-            </div>
+          </div>
         </div>
-    </div>
-
-    <div class="field">
+      </div>
+      <div class="field">
         <label class="label">Magnitud de carga</label>
         <input type="text" id="c3muli"/>
-    </div>
-
-    <div class="field">
+      </div>
+      <div class="field">
         <label class="label">Inicio de Carga</label>
         <input type="text" id="c3ini"/>     
-    </div>
-
-    <div class="field">
+      </div>
+      <div class="field">
         <label class="label">Fin de Carga</label>
         <input type="text" placeholder="Solo cargas distribuidas" id="c3fin"/>     
-    </div>
+      </div>
 
-    <!-- Botón -->
-      
-    <button id="plot-button" type="button" class="button is-primary" onClick="document.getElementById('evtMsg').innerHTML=100" class="button">Plot</button>
+      <!-- Botón -->
+     <button id="plot-button" type="button" class="button is-danger" onClick="document.getElementById('evtMsg').innerHTML=100">Plot</button>
     </div>
-    </div>
+  </div>
 
-
-    <!-- </div> -->
-  
   <hr>
-<!-- <div class="column is-one-half"> -->
   <div id="output"></div>
-<!-- </div> -->
-  
-</div> 
 </div>
-  <!-- </div>
-</div> -->
-  
+
 <!-- Footer -->
 <footer class="footer">
-    <div class="content has-text-centered">
-        <p>
-            Desarrollado por <strong>Carlos Cabrera & Francisco Sahli</strong></a>
-        </p>
-    </div>
+  <div class="content has-text-centered">
+    <p style="font-family: 'Poppins', sans-serif; font-size: 1.1em; font-style: italic; color: #d81b60;">
+  Desarrollado por <strong style="font-weight: 600;">Colomba Guzmán</strong>
+</p>
+
+
+
+  </div>
 </footer>
 
 <py-script src="./main.py"></py-script>
 
 </body>
 </html>
+
+  
